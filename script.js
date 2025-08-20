@@ -113,7 +113,7 @@ function changeColorTheme(theme) {
     if (selectedOption) {
         selectedOption.classList.add('active');
     }
-    
+
     localStorage.setItem('colorTheme', theme);
 }
 
@@ -268,23 +268,40 @@ function showNotification(message) {
     }, 3000);
 }
 
-// Handle form submission
-document.getElementById('orderForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
+// === NEW FUNCTION TO HANDLE ORDER SUBMISSION ===
+function handleOrderSubmission() {
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
     const name = document.getElementById('customerName').value;
     const hostel = document.getElementById('hostelName').value;
     const room = document.getElementById('roomNumber').value;
     const phone = document.getElementById('phoneNumber').value;
-    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    
+    // Simple form validation
+    if (!name || !hostel || !room || !phone) {
+        showNotification('Please fill in all the details!');
+        return;
+    }
 
-    // Prepare WhatsApp message using your exact format
-    const itemsList = currentOrder.items.map(item => `${item.name} x ${item.quantity} = ₹${item.price * item.quantity}`).join('%0A');
-    const whatsappMessage = `Hello%0A%0A🛒 Order Details:%0A%0AName: ${name}%0AHostel: ${hostel}%0ARoom: ${room}%0APhone: ${phone}%0A%0A📦 Items:%0A${itemsList}%0A%0A💰 Total Amount: ₹${currentOrder.total}%0A💳 Payment Method: ${paymentMethod === 'online' ? 'Online Payment (PhonePe)' : 'Cash on Delivery'}%0A%0A⏰ Order Time: ${new Date().toLocaleString()}%0A%0APlease confirm this order. Thank you! 😊`;
+    if (paymentMethod === 'online') {
+        // Here you would integrate with a real payment gateway API
+        // This is a simulated payment process for demonstration
+        showNotification('Initiating online payment...');
+        
+        // Simulate a delay for payment processing
+        setTimeout(() => {
+            // After successful "payment" (simulated), proceed to WhatsApp
+            showNotification('Payment successful! 🎉 Redirecting to WhatsApp...');
+            sendToWhatsApp();
+        }, 2000); // 2-second delay to simulate payment processing
+        
+    } else {
+        // If cash on delivery, proceed directly
+        sendToWhatsApp();
+    }
+}
 
-    // Create WhatsApp URL using your exact format
-    const whatsappURL = `https://api.whatsapp.com/send/?phone=916205574746&text=${whatsappMessage}&type=phone_number&app_absent=0`;
-
+// === NEW FUNCTION TO SEND TO WHATSAPP ===
+function sendToWhatsApp() {
     // Clear cart if it was a cart checkout
     if (currentOrder.items.length > 1 || cart.some(item => currentOrder.items.some(orderItem => orderItem.name === item.name))) {
         cart = [];
@@ -293,28 +310,49 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
 
     closeOrderModal();
 
+    const name = document.getElementById('customerName').value;
+    const hostel = document.getElementById('hostelName').value;
+    const room = document.getElementById('roomNumber').value;
+    const phone = document.getElementById('phoneNumber').value;
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    
+    // Prepare WhatsApp message using your exact format
+    const itemsList = currentOrder.items.map(item => `${item.name} x ${item.quantity} = ₹${item.price * item.quantity}`).join('%0A');
+    const whatsappMessage = `Hello%0A%0A🛒 Order Details:%0A%0AName: ${name}%0AHostel: ${hostel}%0ARoom: ${room}%0APhone: ${phone}%0A%0A📦 Items:%0A${itemsList}%0A%0A💰 Total Amount: ₹${currentOrder.total}%0A💳 Payment Method: ${paymentMethod === 'online' ? 'Online Payment (PhonePe)' : 'Cash on Delivery'}%0A%0A⏰ Order Time: ${new Date().toLocaleString()}%0A%0APlease confirm this order. Thank you! 😊`;
+
+    // Create WhatsApp URL using your exact format
+    const whatsappURL = `https://api.whatsapp.com/send/?phone=916205574746&text=${whatsappMessage}&type=phone_number&app_absent=0`;
+
     // Show confirmation and redirect to WhatsApp
-    showNotification('🎉🎊 Your order has been confirmed! 🎊🎉 Redirecting to WhatsApp...');
+    showNotification('🎉🎊 Your order has been confirmed! 🎊🎉');
 
     setTimeout(() => {
         window.open(whatsappURL, '_blank');
-    }, 2000);
+    }, 1000);
 
     // Reset form
     document.getElementById('orderForm').reset();
-});
+}
 
 function toggleQRDisplay() {
     const onlinePayment = document.querySelector('input[name="paymentMethod"][value="online"]').checked;
     const qrContainer = document.getElementById('qr-code-container');
     const savedQR = localStorage.getItem('phonepe-qr');
-    
-    // Check if the QR container and saved QR exist
-    if (onlinePayment && savedQR) {
-        qrContainer.classList.remove('hidden');
-        document.getElementById('qr-code-container').querySelector('img').src = savedQR;
+    const paymentQRImage = document.getElementById('payment-qr-image');
+    const noQRMessage = document.getElementById('no-qr-message');
+
+    if (onlinePayment) {
+        if (savedQR) {
+            paymentQRImage.src = savedQR;
+            qrContainer.classList.remove('hidden');
+            noQRMessage.classList.add('hidden');
+        } else {
+            qrContainer.classList.add('hidden');
+            noQRMessage.classList.remove('hidden');
+        }
     } else {
         qrContainer.classList.add('hidden');
+        noQRMessage.classList.add('hidden');
     }
 }
 
@@ -332,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateStockDisplay(item);
         }
     });
-    
+
     // Set up QR display based on initial state
     toggleQRDisplay();
 });
