@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnackStation - Order Late, Eat Great</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'light-orange': '#FFF8F0',
+                        'light-pink': '#FFF5F7',
+                        'light-red': '#FFF6F4',
+                        'light-purple': '#FAF8FF'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body id="mainBody" class="bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300">
+    <header class="gradient-header text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold">SnackStation</h1>
+                <p class="text-sm opacity-90">Order Late, Eat Great</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative cursor-pointer" onclick="toggleCart()">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
+                    </svg>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                </div>
+                <button onclick="toggleOwnerPanel()" class="p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div id="ownerPanel" class="owner-panel hidden">
+        <div class="flex justify-between items-center mb-4">
+            <h4 class="text-lg font-bold text-gray-800">Owner Panel</h4>
+            <button onclick="toggleOwnerPanel()" class="text-gray-500 hover:text-gray-700">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Owner Password</label>
+            <input type="password" id="ownerPassword" class="w-full p-2 border rounded-lg mb-2" placeholder="Enter password">
+            <button onclick="checkPassword()" class="w-full bg-green-500 text-white py-1 px-2 rounded text-sm hover:bg-green-600">
+                Unlock
+            </button>
+            <p id="passwordMessage" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <div id="stockControls" class="space-y-3">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Maggi Stock</label>
+                <input type="number" id="maggi-stock-input" class="w-full p-2 border rounded-lg" min="0" disabled>
+                <button onclick="updateStock('maggi')" class="mt-1 w-full bg-blue-500 text-white py-1 px-2 rounded text-sm hover:bg-blue-600" disabled>
+                    Update
+                </button>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Kurkure Stock</label>
+                <input type="number" id="kurkure-stock-input" class="w-full p-2 border rounded-lg" min="0" disabled>
+                <button onclick="updateStock('kurkure')" class="mt-1 w-full bg-blue-500 text-white py-1 px-2 rounded text-sm hover:bg-blue-600" disabled>
+                    Update
+                </button>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">KitKat Stock</label>
+                <input type="number" id="kitkat-stock-input" class="w-full p-2 border rounded-lg" min="0" disabled>
+                <button onclick="updateStock('kitkat')" class="mt-1 w-full bg-blue-500 text-white py-1 px-2 rounded text-sm hover:bg-blue-600" disabled>
+                    Update
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="color-palette">
+        <h4 class="text-sm font-semibold mb-3 text-gray-800 text-center">Colors</h4>
+        <div class="space-y-2">
+            <div class="color-option active" style="background: linear-gradient(135deg, #FED7AA, #FBCFE8, #DDD6FE)" onclick="changeColorTheme('default')" title="Default"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #FCA5A5, #5EEAD4)" onclick="changeColorTheme('coral')" title="Coral Ocean"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #86EFAC, #FDE047, #FDBA74)" onclick="changeColorTheme('mint')" title="Mint Peach"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #FCA5A5, #F9A8D4, #FDA4AF)" onclick="changeColorTheme('rose')" title="Rose Garden"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #C4B5FD, #DDD6FE, #A5B4FC)" onclick="changeColorTheme('lavender')" title="Lavender Dream"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #7DD3FC, #93C5FD, #86EFAC)" onclick="changeColorTheme('sky')" title="Sky Meadow"></div>
+        </div>
+    </div>
+
+    <main class="container mx-auto p-6">
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Single Items</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="item-card rounded-xl p-6 shadow-lg">
+                    <div class="text-6xl text-center mb-4">🍜</div>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">Maggi</h3>
+                    <div class="stock-indicator justify-center mb-2 stock-high">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span id="maggi-stock">25 in stock</span>
+                    </div>
+                    <p id="maggi-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹15</p>
+                    <div class="flex items-center justify-center mb-4">
+                        <button onclick="changeQuantity('maggi', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="maggi-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <button onclick="changeQuantity('maggi', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="buyNow('Maggi', 15, 'maggi')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                            Buy Now
+                        </button>
+                        <button onclick="addToCart('Maggi', 15, 'maggi')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="item-card rounded-xl p-6 shadow-lg">
+                    <div class="text-6xl text-center mb-4">🥨</div>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">Kurkure</h3>
+                    <div class="stock-indicator justify-center mb-2 stock-medium">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span id="kurkure-stock">8 in stock</span>
+                    </div>
+                    <p id="kurkure-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹35</p>
+                    <div class="flex items-center justify-center mb-4">
+                        <button onclick="changeQuantity('kurkure', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="kurkure-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <button onclick="changeQuantity('kurkure', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="buyNow('Kurkure', 35, 'kurkure')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                            Buy Now
+                        </button>
+                        <button onclick="addToCart('Kurkure', 35, 'kurkure')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="item-card rounded-xl p-6 shadow-lg">
+                    <div class="text-6xl text-center mb-4">🍫</div>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">KitKat</h3>
+                    <div class="stock-indicator justify-center mb-2 stock-low">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span id="kitkat-stock">3 in stock</span>
+                    </div>
+                    <p id="kitkat-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹30</p>
+                    <div class="flex items-center justify-center mb-4">
+                        <button onclick="changeQuantity('kitkat', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="kitkat-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <button onclick="changeQuantity('kitkat', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="buyNow('KitKat', 30, 'kitkat')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                            Buy Now
+                        </button>
+                        <button onclick="addToCart('KitKat', 30, 'kitkat')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Combo Packs</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="item-card rounded-xl p-6 shadow-lg">
+                    <div class="text-4xl text-center mb-4">🍜 + 🥨</div>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">Maggi + Kurkure</h3>
+                    <p id="combo1-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹45</p>
+                    <div class="flex items-center justify-center mb-4">
+                        <button onclick="changeQuantity('combo1', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="combo1-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <button onclick="changeQuantity('combo1', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="buyNow('Maggi + Kurkure', 45, 'combo1')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                            Buy Now
+                        </button>
+                        <button onclick="addToCart('Maggi + Kurkure', 45, 'combo1')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="item-card rounded-xl p-6 shadow-lg">
+                    <div class="text-4xl text-center mb-4">🍜 + 🍫</div>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">Maggi + KitKat</h3>
+                    <p id="combo2-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹40</p>
+                    <div class="flex items-center justify-center mb-4">
+                        <button onclick="changeQuantity('combo2', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="combo2-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <button onclick="changeQuantity('combo2', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="buyNow('Maggi + KitKat', 40, 'combo2')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                            Buy Now
+                        </button>
+                        <button onclick="addToCart('Maggi + KitKat', 40, 'combo2')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="item-card rounded-xl p-6 shadow-lg">
+                    <div class="text-4xl text-center mb-4">🥨 + 🍫</div>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">Kurkure + KitKat</h3>
+                    <p id="combo3-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹60</p>
+                    <div class="flex items-center justify-center mb-4">
+                        <button onclick="changeQuantity('combo3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="combo3-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <button onclick="changeQuantity('combo3', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="buyNow('Kurkure + KitKat', 60, 'combo3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                            Buy Now
+                        </button>
+                        <button onclick="addToCart('Kurkure + KitKat', 60, 'combo3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Ultimate Combo</h2>
+            <div class="flex justify-center">
+                <div class="item-card rounded-xl p-8 shadow-lg max-w-md w-full">
+                    <div class="text-4xl text-center mb-4">🍜 + 🥨 + 🍫</div>
+                    <h3 class="text-2xl font-bold text-center mb-2 text-gray-800">Maggi + Kurkure + KitKat</h3>
+                    <p id="ultimate-price" class="text-3xl font-bold text-center text-blue-600 mb-4">₹75</p>
+                    <div class="flex items-center justify-center mb-6">
+                        <button onclick="changeQuantity('ultimate', -1)" class="bg-red-500 text-white w-10 h-10 rounded-full hover:bg-red-600 transition-colors text-lg">-</button>
+                        <span id="ultimate-qty" class="mx-6 text-xl font-semibold text-gray-800">1</span>
+                        <button onclick="changeQuantity('ultimate', 1)" class="bg-green-500 text-white w-10 h-10 rounded-full hover:bg-green-600 transition-colors text-lg">+</button>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="buyNow('Ultimate Combo', 75, 'ultimate')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold text-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                            Buy Now
+                        </button>
+                        <button onclick="addToCart('Ultimate Combo', 75, 'ultimate')" class="bg-gray-500 text-white py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="cartSidebar" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800">Your Cart</h3>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div id="cartItems" class="space-y-4 mb-6">
+                <p class="text-gray-500 text-center">Your cart is empty</p>
+            </div>
+            <div id="cartTotal" class="border-t pt-4 mb-4 hidden">
+                <div class="flex justify-between items-center">
+                    <span class="text-lg font-semibold text-gray-800">Total: </span>
+                    <span id="totalAmount" class="text-lg font-bold text-blue-600">₹0</span>
+                </div>
+            </div>
+            <button id="checkoutBtn" onclick="checkoutCart()" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold hidden">
+                Checkout Cart
+            </button>
+        </div>
+    </div>
+
+    <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full max-h-screen overflow-y-auto">
+            <h3 class="text-2xl font-bold mb-6 text-center text-gray-800">Order Details</h3>
+            
+            <form id="orderForm">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2 text-gray-700">Name</label>
+                    <input type="text" id="customerName" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2 text-gray-700">Hostel Name</label>
+                    <input type="text" id="hostelName" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2 text-gray-700">Room Number</label>
+                    <input type="text" id="roomNumber" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2 text-gray-700">Phone Number</label>
+                    <input type="tel" id="phoneNumber" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 text-gray-700">Order Summary</label>
+                    <div id="orderSummary" class="p-3 bg-gray-100 rounded-lg text-gray-800"></div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 text-gray-700">Payment Method</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="paymentMethod" value="online" checked class="mr-2" onchange="toggleQRDisplay()">
+                            <span class="text-gray-700">Online Payment (PhonePe)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="paymentMethod" value="cash" class="mr-2" onchange="toggleQRDisplay()">
+                            <span class="text-gray-700">Cash on Delivery</span>
+                        </label>
+                    </div>
+                    <div id="qr-display" class="mt-4 text-center">
+                        <div id="qr-code-container" class="hidden">
+                            <p class="text-sm text-gray-600 mb-2">Scan to pay:</p>
+                            <img src="onlinepayment.jpg" class="w-48 h-48 object-cover rounded-lg mx-auto border-2 border-gray-300" alt="PhonePe QR Code">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <button type="button" onclick="closeOrderModal()" class="flex-1 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition-colors">Cancel</button>
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold">Place Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="gradient-header text-white text-center py-6 mt-12">
+        <p class="text-lg font-semibold">Powered by SnackStation</p>
+        <p class="text-sm opacity-90 mt-2">🕒 Open till 3 AM</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
