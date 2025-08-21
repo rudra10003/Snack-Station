@@ -1,5 +1,3 @@
-const OWNER_PASSWORD = "Snack@2@25"; // 🔑 Change this password
-
 let cart = [];
 let currentOrder = null;
 
