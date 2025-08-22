@@ -37,7 +37,7 @@
         }
         .item-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         .dark .item-card {
             background-color: #2D3748;
@@ -422,17 +422,29 @@
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Hostel Name</label>
-                    <input type="text" id="hostelName" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <select id="hostelName" name="hostelName" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="" disabled selected>Select your hostel</option>
+                        <option value="Zakir A">Zakir A</option>
+                        <option value="Zakir B">Zakir B</option>
+                        <option value="Zakir C">Zakir C</option>
+                        <option value="Zakir D">Zakir D</option>
+                        <option value="NC1">NC1</option>
+                        <option value="NC2">NC2</option>
+                        <option value="NC3">NC3</option>
+                        <option value="NC4">NC4</option>
+                        <option value="NC5">NC5</option>
+                        <option value="NC6">NC6</option>
+                    </select>
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Room Number</label>
-                    <input type="text" id="roomNumber" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <input type="text" id="roomNumber" inputmode="numeric" pattern="\d*" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Phone Number</label>
-                    <input type="tel" id="phoneNumber" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <input type="tel" id="phoneNumber" inputmode="numeric" pattern="\d*" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 </div>
                 
                 <div class="mb-6">
@@ -475,11 +487,229 @@
         <p class="text-sm opacity-90 mt-2">🕒 Open till 3 AM</p>
     </footer>
 
-    <!-- Main JavaScript file - assuming this exists locally -->
-    <script src="script.js"></script>
-
-    <!-- Dark Mode Toggle Script -->
+    <!-- All necessary JavaScript functions are now in this script block -->
     <script>
+        // Data structure to hold the state of the app
+        const items = {
+            'maggi': { name: 'Maggi', price: 15, qty: 1, stock: 'high' },
+            'kurkure': { name: 'Kurkure', price: 35, qty: 1, stock: 'medium' },
+            'kitkat': { name: 'KitKat', price: 30, qty: 1, stock: 'low' },
+            'combo1': { name: 'Maggi + Kurkure', price: 45, qty: 1, stock: 'high' },
+            'combo2': { name: 'Maggi + KitKat', price: 40, qty: 1, stock: 'high' },
+            'combo3': { name: 'Kurkure + KitKat', price: 60, qty: 1, stock: 'high' },
+            'ultimate': { name: 'Ultimate Combo', price: 75, qty: 1, stock: 'high' },
+        };
+        let cart = [];
+
+        // Function to update the quantity display for an item
+        function changeQuantity(itemId, change) {
+            const qtyElement = document.getElementById(`${itemId}-qty`);
+            let currentQty = parseInt(qtyElement.innerText);
+            currentQty += change;
+            if (currentQty < 1) {
+                currentQty = 1;
+            }
+            qtyElement.innerText = currentQty;
+            items[itemId].qty = currentQty;
+        }
+
+        // Function to add an item to the cart
+        function addToCart(itemName, itemPrice, itemId) {
+            const qty = items[itemId].qty;
+            const existingItemIndex = cart.findIndex(item => item.id === itemId);
+
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].qty += qty;
+            } else {
+                cart.push({ id: itemId, name: itemName, price: itemPrice, qty: qty });
+            }
+
+            updateCartDisplay();
+            toggleCart();
+        }
+
+        // Function to handle Buy Now action
+        function buyNow(itemName, itemPrice, itemId) {
+            cart = [{ id: itemId, name: itemName, price: itemPrice, qty: items[itemId].qty }];
+            openOrderModal();
+        }
+
+        // Function to handle Checkout Cart action
+        function checkoutCart() {
+            openOrderModal();
+        }
+
+        // Function to update the cart sidebar content
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalContainer = document.getElementById('cartTotal');
+            const totalAmountElement = document.getElementById('totalAmount');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            let total = 0;
+
+            cartItemsContainer.innerHTML = '';
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center dark:text-gray-400">Your cart is empty</p>';
+                cartTotalContainer.classList.add('hidden');
+                checkoutBtn.classList.add('hidden');
+            } else {
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.qty;
+                    total += itemTotal;
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex justify-between items-center bg-gray-100 p-3 rounded-lg dark:bg-gray-700';
+                    itemDiv.innerHTML = `
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-gray-800 dark:text-white">${item.name}</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">₹${item.price} x ${item.qty}</p>
+                        </div>
+                        <span class="font-bold text-blue-600 dark:text-blue-400">₹${itemTotal}</span>
+                        <button onclick="removeItemFromCart(${index})" class="ml-4 text-red-500 hover:text-red-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-1.41-1.41-1.41 1.41-5.65-5.65-1.41 1.41 5.65 5.65-1.41 1.41 1.41 1.41 5.65-5.65 1.41-1.41z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-1.41-1.41-1.41 1.41-5.65-5.65-1.41 1.41 5.65 5.65-1.41 1.41 1.41 1.41 5.65-5.65 1.41-1.41z" transform="rotate(45 12 12)"></path>
+                            </svg>
+                        </button>
+                    `;
+                    cartItemsContainer.appendChild(itemDiv);
+                });
+
+                totalAmountElement.innerText = `₹${total}`;
+                cartTotalContainer.classList.remove('hidden');
+                checkoutBtn.classList.remove('hidden');
+            }
+            document.getElementById('cartCount').innerText = cart.length;
+        }
+
+        // Function to remove an item from the cart
+        function removeItemFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+        
+        // Function to open the order modal
+        function openOrderModal() {
+            const modal = document.getElementById('orderModal');
+            const summary = document.getElementById('orderSummary');
+            let summaryHTML = '<ul>';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                summaryHTML += `<li class="mb-1">${item.name} x ${item.qty} = ₹${itemTotal}</li>`;
+            });
+            summaryHTML += `<li class="font-bold border-t border-gray-300 mt-2 pt-2">Total: ₹${total}</li>`;
+            summaryHTML += '</ul>';
+            summary.innerHTML = summaryHTML;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Function to close the order modal
+        function closeOrderModal() {
+            const modal = document.getElementById('orderModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Function to handle order submission (mock)
+        function handleOrderSubmission() {
+            const name = document.getElementById('customerName').value;
+            const hostel = document.getElementById('hostelName').value;
+            const room = document.getElementById('roomNumber').value;
+            const phone = document.getElementById('phoneNumber').value;
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            if (!name || !hostel || !room || !phone) {
+                alert('Please fill out all the fields!');
+                return;
+            }
+            
+            // Mock submission
+            let orderDetails = {
+                name,
+                hostel,
+                room,
+                phone,
+                paymentMethod,
+                items: cart
+            };
+
+            alert('Order Placed Successfully!\n\nDetails:\n' + JSON.stringify(orderDetails, null, 2));
+            
+            // Clear cart and close modal
+            cart = [];
+            updateCartDisplay();
+            closeOrderModal();
+        }
+
+        // Function to toggle the QR code display
+        function toggleQRDisplay() {
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+            const qrContainer = document.getElementById('qr-code-container');
+            const noQrMessage = document.getElementById('no-qr-message');
+            const qrImage = document.getElementById('payment-qr-image');
+
+            if (paymentMethod === 'online') {
+                // Mock QR code image for demonstration
+                const mockQRCodeURL = "https://placehold.co/400x400/000000/FFFFFF?text=Scan+to+Pay";
+                qrImage.src = mockQRCodeURL;
+                qrContainer.classList.remove('hidden');
+                noQrMessage.classList.add('hidden');
+            } else {
+                qrContainer.classList.add('hidden');
+                noQrMessage.classList.add('hidden'); // Hide the message on cash option
+            }
+        }
+        
+        // Function to toggle the cart sidebar
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            cartSidebar.classList.toggle('translate-x-full');
+        }
+
+        // Function to change the color theme
+        function changeColorTheme(themeName) {
+            const body = document.getElementById('mainBody');
+            const colorOptions = document.querySelectorAll('.color-option');
+            
+            // Remove active class from all options
+            colorOptions.forEach(option => option.classList.remove('active'));
+
+            // Add active class to the clicked option
+            const clickedOption = document.querySelector(`[onclick*="changeColorTheme('${themeName}')"]`);
+            if (clickedOption) {
+                clickedOption.classList.add('active');
+            }
+
+            // Change the body background based on the theme
+            switch(themeName) {
+                case 'default':
+                    body.className = 'bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                case 'coral':
+                    body.className = 'bg-gradient-to-br from-[#FCA5A5] via-[#FCA5A5] to-[#5EEAD4] min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                case 'mint':
+                    body.className = 'bg-gradient-to-br from-[#86EFAC] via-[#FDE047] to-[#FDBA74] min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                case 'rose':
+                    body.className = 'bg-gradient-to-br from-[#FCA5A5] via-[#F9A8D4] to-[#FDA4AF] min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                case 'lavender':
+                    body.className = 'bg-gradient-to-br from-[#C4B5FD] via-[#DDD6FE] to-[#A5B4FC] min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                case 'sky':
+                    body.className = 'bg-gradient-to-br from-[#7DD3FC] via-[#93C5FD] to-[#86EFAC] min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                default:
+                    body.className = 'bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+            }
+        }
+
+
+        // Dark Mode Toggle Script
         function toggleDarkMode() {
             const html = document.documentElement;
             html.classList.toggle('dark');
@@ -509,5 +739,3 @@
     </script>
 </body>
 </html>
-�
-
