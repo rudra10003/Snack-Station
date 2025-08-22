@@ -7,53 +7,155 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'selector', // Enables dark mode based on the 'dark' class on the HTML tag
             theme: {
                 extend: {
                     colors: {
                         'light-orange': '#FFF8F0',
                         'light-pink': '#FFF5F7',
                         'light-red': '#FFF6F4',
-                        'light-purple': '#FAF8FF'
+                        'light-purple': '#FAF8FF',
+                        // Added colors for dark mode to ensure contrast
+                        'dark-bg': '#1a202c',
+                        'dark-card': '#2d3748',
                     }
                 }
             }
         }
     </script>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom styles for gradients and card effects, with dark mode variants */
+        .gradient-header {
+            background: linear-gradient(90deg, #6B46C1, #805AD5, #9F7AEA);
+        }
+        .dark .gradient-header {
+            background: linear-gradient(90deg, #2D3748, #2A4365, #1A202C);
+        }
+        .item-card {
+            background-color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .dark .item-card {
+            background-color: #2D3748;
+        }
+        /* Color palette styles */
+        .color-palette {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .dark .color-palette {
+            background-color: #1a202c;
+            box-shadow: 2px 0 10px rgba(255,255,255,0.1);
+        }
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            margin: 5px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: border-color 0.2s ease;
+        }
+        .color-option.active, .color-option:hover {
+            border-color: #4A5568;
+        }
+        .dark .color-option.active, .dark .color-option:hover {
+            border-color: #E2E8F0;
+        }
+        /* Stock indicator styles */
+        .stock-indicator {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .stock-high::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #48BB78;
+            margin-right: 8px;
+        }
+        .stock-high::after {
+            content: 'In Stock';
+            color: #48BB78;
+        }
+        .stock-medium::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #F6AD55;
+            margin-right: 8px;
+        }
+        .stock-medium::after {
+            content: 'Low Stock';
+            color: #F6AD55;
+        }
+        .stock-low::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #F56565;
+            margin-right: 8px;
+        }
+        .stock-low::after {
+            content: 'Last Few!';
+            color: #F56565;
+        }
+        @keyframes blinkBox {
+            0%, 100% { box-shadow: 0 0 0px #FACC15; }
+            50% { box-shadow: 0 0 20px #FACC15; }
+        }
+        .animate-blink {
+            animation: blinkBox 1s ease-in-out infinite; 
+        }
+    </style>
 </head>
-<body id="mainBody" class="bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300">
-    <!-- Announcement Modal -->
-<div id="announcementModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-yellow-100 border-2 border-yellow-300 rounded-lg shadow-lg p-6 w-96 relative animate-blink">
-    <!-- Close Button -->
-    <button onclick="closeAnnouncement()" class="absolute top-2 right-2 text-yellow-800 hover:text-yellow-900">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
-    </button>
+<!-- The 'dark' class will be added or removed from this element by the JavaScript -->
+<body id="mainBody" class="bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100">
+    <!-- Announcement Modal with dark mode styles -->
+    <div id="announcementModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 dark:bg-opacity-70">
+        <div class="bg-yellow-100 border-2 border-yellow-300 rounded-lg shadow-lg p-6 w-96 relative animate-blink dark:bg-yellow-900 dark:border-yellow-700">
+            <!-- Close Button with dark mode styles -->
+            <button onclick="closeAnnouncement()" class="absolute top-2 right-2 text-yellow-800 hover:text-yellow-900 dark:text-yellow-200 dark:hover:text-yellow-100">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <h2 class="text-lg font-bold text-yellow-900 mb-2 dark:text-yellow-100">⚡ Announcement</h2>
+            <p class="text-yellow-800 font-medium dark:text-yellow-200">We are working on payment gateways so use <b>Cash on Delivery</b>.</p>
+        </div>
+    </div>
+    
+    <!-- Script to close the announcement modal -->
+    <script>
+        function closeAnnouncement() {
+            document.getElementById('announcementModal').style.display = 'none';
+        }
+    </script>
 
-    <!-- Content -->
-    <h2 class="text-lg font-bold text-yellow-900 mb-2">⚡ Announcement</h2>
-    <p class="text-yellow-800 font-medium">We are working on payment gateways so use <b>Cash on Delivery</b>.</p>
-  </div>
-</div>
-
-<style>
-  @keyframes blinkBox {
-    0%, 100% { box-shadow: 0 0 0px #FACC15; }
-    50% { box-shadow: 0 0 20px #FACC15; }
-  }
-  .animate-blink {
-    animation: blinkBox 1s ease-in-out 100 ; 
-  }
-</style>
-
-<script>
-  function closeAnnouncement() {
-    document.getElementById('announcementModal').style.display = 'none';
-  }
-</script>
-
+    <!-- Header with dark mode styles -->
     <header class="gradient-header text-white p-4 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
             <div>
@@ -61,19 +163,28 @@
                 <p class="text-sm opacity-90">Order Late, Eat Great</p>
             </div>
             <div class="flex items-center space-x-4">
-                <div class="relative cursor-pointer" onclick="toggleCart()">
+                <!-- Dark Mode Toggle Button -->
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600">
+                    <svg id="moon-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+                    <svg id="sun-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 20a8 8 0 110-16 8 8 0 010 16zM12 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM19 12a1 1 0 00-1-1h-2a1 1 0 000 2h2a1 1 0 001-1zM5 12a1 1 0 00-1-1H2a1 1 0 000 2h2a1 1 0 001-1zM12 19a1 1 0 00-1 1v2a1 1 0 002 0v-2a1 1 0 00-1-1zM16.24 7.76a1 1 0 00.71-.29l1.41-1.41a1 1 0 00-1.41-1.41l-1.41 1.41a1 1 0 00.29.71zM7.76 16.24a1 1 0 00.71.29l1.41 1.41a1 1 0 00-1.41 1.41l-1.41-1.41a1 1 0 00-.29-.71zM18.36 18.36a1 1 0 00-.71.29l-1.41 1.41a1 1 0 101.41 1.41l1.41-1.41a1 1 0 00-.29-.71zM5.64 5.64a1 1 0 00-.71-.29l-1.41-1.41a1 1 0 10-1.41 1.41l1.41 1.41a1 1 0 00.71-.29z"></path>
+                    </svg>
+                </button>
+                <div class="relative cursor-pointer text-white" onclick="toggleCart()">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
                     </svg>
                     <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
                 </div>
-               
             </div>
         </div>
     </header>
-</div>
-    <div class="color-palette">
-        <h4 class="text-sm font-semibold mb-3 text-gray-800 text-center">Colors</h4>
+
+    <!-- Color palette with dark mode styles -->
+    <div class="color-palette bg-white dark:bg-gray-800">
+        <h4 class="text-sm font-semibold mb-3 text-gray-800 text-center dark:text-gray-100">Colors</h4>
         <div class="space-y-2">
             <div class="color-option active" style="background: linear-gradient(135deg, #FED7AA, #FBCFE8, #DDD6FE)" onclick="changeColorTheme('default')" title="Default"></div>
             <div class="color-option" style="background: linear-gradient(135deg, #FCA5A5, #5EEAD4)" onclick="changeColorTheme('coral')" title="Coral Ocean"></div>
@@ -85,18 +196,17 @@
     </div>
 
     <main class="container mx-auto p-6">
+        <!-- Single Items Section with dark mode styles for cards and text -->
         <section class="mb-12">
-            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Single Items</h2>
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">Single Items</h2>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="item-card rounded-xl p-6 shadow-lg">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4">🍜</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">Maggi</h3>
-                    <div class="stock-indicator justify-center mb-2 stock-high">
-                    </div>
-                    <p id="maggi-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹15</p>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi</h3>
+                    <p id="maggi-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹15</p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('maggi', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="maggi-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <span id="maggi-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('maggi', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
@@ -114,15 +224,13 @@
                     </div>
                 </div>
 
-                <div class="item-card rounded-xl p-6 shadow-lg">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4">🌶️</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">Kurkure</h3>
-                    <div class="stock-indicator justify-center mb-2 stock-medium">
-                    </div>
-                    <p id="kurkure-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹35</p>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Kurkure</h3>
+                    <p id="kurkure-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹35</p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('kurkure', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="kurkure-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <span id="kurkure-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('kurkure', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
@@ -140,15 +248,13 @@
                     </div>
                 </div>
 
-                <div class="item-card rounded-xl p-6 shadow-lg">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4">🍫</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">KitKat</h3>
-                    <div class="stock-indicator justify-center mb-2 stock-low">
-                    </div>
-                    <p id="kitkat-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹30</p>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">KitKat</h3>
+                    <p id="kitkat-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹30</p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('kitkat', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="kitkat-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <span id="kitkat-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('kitkat', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
@@ -168,16 +274,17 @@
             </div>
         </section>
 
+        <!-- Combo Packs Section with dark mode styles for cards and text -->
         <section class="mb-12">
-            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Combo Packs</h2>
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">Combo Packs</h2>
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="item-card rounded-xl p-6 shadow-lg">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4">🍜 + 🌶️</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">Maggi + Kurkure</h3>
-                    <p id="combo1-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹45</p>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi + Kurkure</h3>
+                    <p id="combo1-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45</p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('combo1', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="combo1-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <span id="combo1-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('combo1', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
@@ -195,13 +302,13 @@
                     </div>
                 </div>
 
-                <div class="item-card rounded-xl p-6 shadow-lg">
-                    <div class="text-4xl text-center mb-4">🍜 + 🍫</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">Maggi + KitKat</h3>
-                    <p id="combo2-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹40</p>
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                    <div class="text-4xl text-center mb-4">� + 🍫</div>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi + KitKat</h3>
+                    <p id="combo2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹40</p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('combo2', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="combo2-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <span id="combo2-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('combo2', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
@@ -219,13 +326,13 @@
                     </div>
                 </div>
 
-                <div class="item-card rounded-xl p-6 shadow-lg">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4">🌶️ + 🍫</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800">Kurkure + KitKat</h3>
-                    <p id="combo3-price" class="text-2xl font-bold text-center text-blue-600 mb-4">₹60</p>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Kurkure + KitKat</h3>
+                    <p id="combo3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹60</p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('combo3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="combo3-qty" class="mx-4 text-lg font-semibold text-gray-800">1</span>
+                        <span id="combo3-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('combo3', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
@@ -245,16 +352,17 @@
             </div>
         </section>
 
+        <!-- Ultimate Combo Section with dark mode styles for card and text -->
         <section class="mb-12">
-            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Ultimate Combo</h2>
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">Ultimate Combo</h2>
             <div class="flex justify-center">
-                <div class="item-card rounded-xl p-8 shadow-lg max-w-md w-full">
+                <div class="item-card rounded-xl p-8 shadow-lg max-w-md w-full bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4">🍜 + 🌶️ + 🍫</div>
-                    <h3 class="text-2xl font-bold text-center mb-2 text-gray-800">Maggi + Kurkure + KitKat</h3>
-                    <p id="ultimate-price" class="text-3xl font-bold text-center text-blue-600 mb-4">₹75</p>
+                    <h3 class="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi + Kurkure + KitKat</h3>
+                    <p id="ultimate-price" class="text-3xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹75</p>
                     <div class="flex items-center justify-center mb-6">
                         <button onclick="changeQuantity('ultimate', -1)" class="bg-red-500 text-white w-10 h-10 rounded-full hover:bg-red-600 transition-colors text-lg">-</button>
-                        <span id="ultimate-qty" class="mx-6 text-xl font-semibold text-gray-800">1</span>
+                        <span id="ultimate-qty" class="mx-6 text-xl font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('ultimate', 1)" class="bg-green-500 text-white w-10 h-10 rounded-full hover:bg-green-600 transition-colors text-lg">+</button>
                     </div>
                     <div class="flex space-x-2">
@@ -275,23 +383,24 @@
         </section>
     </main>
 
-    <div id="cartSidebar" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
+    <!-- Cart Sidebar with dark mode styles -->
+    <div id="cartSidebar" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 dark:bg-gray-800">
         <div class="p-6">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold text-gray-800">Your Cart</h3>
-                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">Your Cart</h3>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
             <div id="cartItems" class="space-y-4 mb-6">
-                <p class="text-gray-500 text-center">Your cart is empty</p>
+                <p class="text-gray-500 text-center dark:text-gray-400">Your cart is empty</p>
             </div>
-            <div id="cartTotal" class="border-t pt-4 mb-4 hidden">
+            <div id="cartTotal" class="border-t pt-4 mb-4 hidden dark:border-gray-700">
                 <div class="flex justify-between items-center">
-                    <span class="text-lg font-semibold text-gray-800">Total: </span>
-                    <span id="totalAmount" class="text-lg font-bold text-blue-600">₹0</span>
+                    <span class="text-lg font-semibold text-gray-800 dark:text-white">Total: </span>
+                    <span id="totalAmount" class="text-lg font-bold text-blue-600 dark:text-blue-400">₹0</span>
                 </div>
             </div>
             <button id="checkoutBtn" onclick="checkoutCart()" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold hidden">
@@ -300,52 +409,53 @@
         </div>
     </div>
 
-    <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl p-8 max-w-md w-full max-h-screen overflow-y-auto">
-            <h3 class="text-2xl font-bold mb-6 text-center text-gray-800">Order Details</h3>
+    <!-- Order Modal with dark mode styles -->
+    <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4 dark:bg-opacity-70">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full max-h-screen overflow-y-auto dark:bg-gray-800">
+            <h3 class="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Order Details</h3>
             
             <form id="orderForm">
                 <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2 text-gray-700">Name</label>
-                    <input type="text" id="customerName" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Name</label>
+                    <input type="text" id="customerName" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 </div>
                 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2 text-gray-700">Hostel Name</label>
-                    <input type="text" id="hostelName" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Hostel Name</label>
+                    <input type="text" id="hostelName" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 </div>
                 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2 text-gray-700">Room Number</label>
-                    <input type="text" id="roomNumber" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Room Number</label>
+                    <input type="text" id="roomNumber" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 </div>
                 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2 text-gray-700">Phone Number</label>
-                    <input type="tel" id="phoneNumber" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Phone Number</label>
+                    <input type="tel" id="phoneNumber" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 </div>
                 
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2 text-gray-700">Order Summary</label>
-                    <div id="orderSummary" class="p-3 bg-gray-100 rounded-lg text-gray-800"></div>
+                    <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Order Summary</label>
+                    <div id="orderSummary" class="p-3 bg-gray-100 rounded-lg text-gray-800 dark:bg-gray-700 dark:text-white"></div>
                 </div>
                 
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2 text-gray-700">Payment Method</label>
+                    <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Payment Method</label>
                     <div class="space-y-2">
                         <label class="flex items-center">
                             <input type="radio" name="paymentMethod" value="online" checked class="mr-2" onchange="toggleQRDisplay()">
-                            <span class="text-gray-700">Online Payment (PhonePe)</span>
+                            <span class="text-gray-700 dark:text-gray-300">Online Payment (PhonePe)</span>
                         </label>
                         <label class="flex items-center">
                             <input type="radio" name="paymentMethod" value="cash" class="mr-2" onchange="toggleQRDisplay()">
-                            <span class="text-gray-700">Cash on Delivery</span>
+                            <span class="text-gray-700 dark:text-gray-300">Cash on Delivery</span>
                         </label>
                     </div>
                     <div id="qr-display" class="mt-4 text-center">
                         <div id="qr-code-container" class="hidden">
-                            <p class="text-sm text-gray-600 mb-2">Scan to pay:</p>
-                            <img id="payment-qr-image" src="" class="w-48 h-48 object-cover rounded-lg mx-auto border-2 border-gray-300" alt="PhonePe QR Code">
+                            <p class="text-sm text-gray-600 mb-2 dark:text-gray-400">Scan to pay:</p>
+                            <img id="payment-qr-image" src="" class="w-48 h-48 object-cover rounded-lg mx-auto border-2 border-gray-300 dark:border-gray-600" alt="PhonePe QR Code">
                         </div>
                         <p id="no-qr-message" class="hidden text-sm text-red-500">No QR code uploaded yet!</p>
                     </div>
@@ -359,11 +469,44 @@
         </div>
     </div>
 
-    <footer class="gradient-header text-white text-center py-6 mt-12">
+    <!-- Footer with dark mode styles -->
+    <footer class="gradient-header text-white text-center py-6 mt-12 dark:bg-gray-800 dark:text-gray-100">
         <p class="text-lg font-semibold">Powered by SnackStation</p>
         <p class="text-sm opacity-90 mt-2">🕒 Open till 3 AM</p>
     </footer>
 
+    <!-- Main JavaScript file - assuming this exists locally -->
     <script src="script.js"></script>
+
+    <!-- Dark Mode Toggle Script -->
+    <script>
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            
+            // Toggle the visibility of the sun and moon icons
+            document.getElementById('moon-icon').classList.toggle('hidden', isDark);
+            document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
+
+            // Save the user's preference to local storage
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // Check local storage on page load to apply the saved theme
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.getElementById('moon-icon').classList.add('hidden');
+                document.getElementById('sun-icon').classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('moon-icon').classList.remove('hidden');
+                document.getElementById('sun-icon').classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>
+�
