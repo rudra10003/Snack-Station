@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'selector', // Enables dark mode based on the 'dark' class on the HTML tag
+            darkMode: 'selector',
             theme: {
                 extend: {
                     colors: {
@@ -15,7 +15,6 @@
                         'light-pink': '#FFF5F7',
                         'light-red': '#FFF6F4',
                         'light-purple': '#FAF8FF',
-                        // Added colors for dark mode to ensure contrast
                         'dark-bg': '#1a202c',
                         'dark-card': '#2d3748',
                     }
@@ -24,7 +23,6 @@
         }
     </script>
     <style>
-        /* Custom styles for gradients and card effects, with dark mode variants */
         .gradient-header {
             background: linear-gradient(90deg, #6B46C1, #805AD5, #9F7AEA);
         }
@@ -42,7 +40,6 @@
         .dark .item-card {
             background-color: #2D3748;
         }
-        /* Color palette styles */
         .color-palette {
             position: fixed;
             top: 50%;
@@ -77,67 +74,19 @@
         .dark .color-option.active, .dark .color-option:hover {
             border-color: #E2E8F0;
         }
-        /* Stock indicator styles */
-        .stock-indicator {
-            display: flex;
-            align-items: center;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-        .stock-high::before {
-            content: '';
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #48BB78;
-            margin-right: 8px;
-        }
-        .stock-high::after {
-            content: 'In Stock';
-            color: #48BB78;
-        }
-        .stock-medium::before {
-            content: '';
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #F6AD55;
-            margin-right: 8px;
-        }
-        .stock-medium::after {
-            content: 'Low Stock';
-            color: #F6AD55;
-        }
-        .stock-low::before {
-            content: '';
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #F56565;
-            margin-right: 8px;
-        }
-        .stock-low::after {
-            content: 'Last Few!';
-            color: #F56565;
-        }
         @keyframes blinkBox {
             0%, 100% { box-shadow: 0 0 0px #FACC15; }
             50% { box-shadow: 0 0 20px #FACC15; }
         }
         .animate-blink {
-            animation: blinkBox 1s ease-in-out infinite; 
+            animation: blinkBox 1s ease-in-out infinite;
         }
     </style>
 </head>
-<!-- The 'dark' class will be added or removed from this element by the JavaScript -->
 <body id="mainBody" class="bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100">
-    <!-- Announcement Modal with dark mode styles -->
+    <!-- Announcement Modal -->
     <div id="announcementModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 dark:bg-opacity-70">
         <div class="bg-yellow-100 border-2 border-yellow-300 rounded-lg shadow-lg p-6 w-96 relative animate-blink dark:bg-yellow-900 dark:border-yellow-700">
-            <!-- Close Button with dark mode styles -->
             <button onclick="closeAnnouncement()" class="absolute top-2 right-2 text-yellow-800 hover:text-yellow-900 dark:text-yellow-200 dark:hover:text-yellow-100">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -147,15 +96,13 @@
             <p class="text-yellow-800 font-medium dark:text-yellow-200">We are working on payment gateways so use <b>Cash on Delivery</b>.</p>
         </div>
     </div>
-    
-    <!-- Script to close the announcement modal -->
     <script>
         function closeAnnouncement() {
             document.getElementById('announcementModal').style.display = 'none';
         }
     </script>
 
-    <!-- Header with dark mode styles -->
+    <!-- Header -->
     <header class="gradient-header text-white p-4 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
             <div>
@@ -163,7 +110,6 @@
                 <p class="text-sm opacity-90">Order Late, Eat Great</p>
             </div>
             <div class="flex items-center space-x-4">
-                <!-- Dark Mode Toggle Button -->
                 <button onclick="toggleDarkMode()" class="p-2 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600">
                     <svg id="moon-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
@@ -182,7 +128,7 @@
         </div>
     </header>
 
-    <!-- Color palette with dark mode styles -->
+    <!-- Color palette -->
     <div class="color-palette bg-white dark:bg-gray-800">
         <h4 class="text-sm font-semibold mb-3 text-gray-800 text-center dark:text-gray-100">Colors</h4>
         <div class="space-y-2">
@@ -196,7 +142,7 @@
     </div>
 
     <main class="container mx-auto p-6">
-        <!-- Single Items Section with dark mode styles for cards and text -->
+        <!-- Single Items Section -->
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">Single Items</h2>
             <div class="grid md:grid-cols-3 gap-6">
@@ -223,7 +169,6 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4">🌶️</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Kurkure</h3>
@@ -247,7 +192,6 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4">🥔🥔</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Lays</h3>
@@ -274,14 +218,14 @@
             </div>
         </section>
 
-        <!-- Combo Packs Section with dark mode styles for cards and text -->
+        <!-- Combo Packs Section -->
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">Combo Packs</h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4">🍜 + 🌶️</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi + Kurkure</h3>
-                    <p id="combo1-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45</p>
+                    <p id="combo1-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('combo1', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="combo1-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
@@ -305,20 +249,20 @@
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4">🍜 + 🥔🥔</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi + Lays</h3>
-                    <p id="combo2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45</p>
+                    <p id="combo2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('combo2', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="combo2-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('combo2', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="buyNow('Maggi + KitKat', 40, 'combo2')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                        <button onclick="buyNow('Maggi + Lays', 45, 'combo2')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                             </svg>
                             Buy Now
                         </button>
-                        <button onclick="addToCart('Maggi + KitKat', 40, 'combo2')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="addToCart('Maggi + Lays', 45, 'combo2')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
                             </svg>
@@ -329,20 +273,20 @@
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4">🌶️ + 🥔🥔</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Kurkure + Lays</h3>
-                    <p id="combo3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹60</p>
+                    <p id="combo3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹60 <span class="text-sm text-green-500">(Save 10 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('combo3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="combo3-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('combo3', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="buyNow('Kurkure + KitKat', 60, 'combo3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                        <button onclick="buyNow('Kurkure + Lays', 60, 'combo3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                             </svg>
                             Buy Now
                         </button>
-                        <button onclick="addToCart('Kurkure + KitKat', 60, 'combo3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="addToCart('Kurkure + Lays', 60, 'combo3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
                             </svg>
@@ -352,14 +296,14 @@
             </div>
         </section>
 
-        <!-- Ultimate Combo Section with dark mode styles for card and text -->
+        <!-- Ultimate Combo Section -->
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">Ultimate Combo</h2>
             <div class="flex justify-center">
                 <div class="item-card rounded-xl p-8 shadow-lg max-w-md w-full bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4">🍜 + 🌶️ + 🥔🥔</div>
                     <h3 class="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi + Kurkure + Lays</h3>
-                    <p id="ultimate-price" class="text-3xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹75</p>
+                    <p id="ultimate-price" class="text-3xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹75 <span class="text-sm text-green-500">(Save 10 rs)</span></p>
                     <div class="flex items-center justify-center mb-6">
                         <button onclick="changeQuantity('ultimate', -1)" class="bg-red-500 text-white w-10 h-10 rounded-full hover:bg-red-600 transition-colors text-lg">-</button>
                         <span id="ultimate-qty" class="mx-6 text-xl font-semibold text-gray-800 dark:text-gray-200">1</span>
@@ -383,7 +327,7 @@
         </section>
     </main>
 
-    <!-- Cart Sidebar with dark mode styles -->
+    <!-- Cart Sidebar -->
     <div id="cartSidebar" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 dark:bg-gray-800">
         <div class="p-6">
             <div class="flex justify-between items-center mb-6">
@@ -403,13 +347,13 @@
                     <span id="totalAmount" class="text-lg font-bold text-blue-600 dark:text-blue-400">₹0</span>
                 </div>
             </div>
-            <button id="checkoutBtn" onclick="checkoutCart()" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold hidden">
+            <button id="checkoutBtn" onclick="openOrderModal()" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold hidden">
                 Checkout Cart
             </button>
         </div>
     </div>
 
-    <!-- Order Modal with dark mode styles -->
+    <!-- Order Modal -->
     <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4 dark:bg-opacity-70">
         <div class="bg-white rounded-xl p-8 max-w-md w-full max-h-screen overflow-y-auto dark:bg-gray-800">
             <h3 class="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Order Details</h3>
@@ -481,13 +425,12 @@
         </div>
     </div>
 
-    <!-- Footer with dark mode styles -->
+    <!-- Footer -->
     <footer class="gradient-header text-white text-center py-6 mt-12 dark:bg-gray-800 dark:text-gray-100">
         <p class="text-lg font-semibold">Powered by SnackStation</p>
         <p class="text-sm opacity-90 mt-2">🕒 Open till 3 AM</p>
     </footer>
 
-    <!-- All necessary JavaScript functions are now in this script block -->
     <script>
         // Data structure to hold the state of the app
         const items = {
@@ -495,8 +438,8 @@
             'kurkure': { name: 'Kurkure', price: 35, qty: 1, stock: 'medium' },
             'kitkat': { name: 'KitKat', price: 30, qty: 1, stock: 'low' },
             'combo1': { name: 'Maggi + Kurkure', price: 45, qty: 1, stock: 'high' },
-            'combo2': { name: 'Maggi + KitKat', price: 40, qty: 1, stock: 'high' },
-            'combo3': { name: 'Kurkure + KitKat', price: 60, qty: 1, stock: 'high' },
+            'combo2': { name: 'Maggi + Lays', price: 45, qty: 1, stock: 'high' },
+            'combo3': { name: 'Kurkure + Lays', price: 60, qty: 1, stock: 'high' },
             'ultimate': { name: 'Ultimate Combo', price: 75, qty: 1, stock: 'high' },
         };
         let cart = [];
@@ -613,7 +556,7 @@
             modal.classList.remove('flex');
         }
 
-        // Function to handle order submission (mock)
+        // UPDATED FUNCTION: Gathers form data and redirects to WhatsApp
         function handleOrderSubmission() {
             const name = document.getElementById('customerName').value;
             const hostel = document.getElementById('hostelName').value;
@@ -621,27 +564,47 @@
             const phone = document.getElementById('phoneNumber').value;
             const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
+            // Simple validation to ensure all required fields are filled
             if (!name || !hostel || !room || !phone) {
-                alert('Please fill out all the fields!');
+                // You can add a more robust UI message here instead of an alert
                 return;
             }
             
-            // Mock submission
-            let orderDetails = {
-                name,
-                hostel,
-                room,
-                phone,
-                paymentMethod,
-                items: cart
-            };
-
-            alert('Order Placed Successfully!\n\nDetails:\n' + JSON.stringify(orderDetails, null, 2));
+            // Build the message content for WhatsApp
+            let message = "Hi SnackStation, I would like to place an order.\n\n";
             
-            // Clear cart and close modal
+            message += "*Customer Details:*\n";
+            message += `Name: ${name}\n`;
+            message += `Hostel: ${hostel}\n`;
+            message += `Room No: ${room}\n`;
+            message += `Phone: ${phone}\n\n`;
+            
+            message += "*Order Details:*\n";
+            let total = 0;
+            cart.forEach(item => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                message += `- ${item.name} (x${item.qty}) = ₹${itemTotal}\n`;
+            });
+            
+            message += `\n*Total Amount:* ₹${total}\n`;
+            message += `*Payment Method:* ${paymentMethod === 'online' ? 'Online Payment (PhonePe)' : 'Cash on Delivery'}\n\n`;
+            
+            message += "Please confirm my order and let me know the estimated delivery time.";
+            
+            // URL-encode the message to make it safe for a URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Construct the final WhatsApp URL with your number and the message
+            const whatsappUrl = `https://wa.me/916205574746?text=${encodedMessage}`;
+            
+            // Open the WhatsApp chat in a new tab
+            window.open(whatsappUrl, '_blank');
+            
+            // Close the modal and clear the cart after the user is redirected
+            closeOrderModal();
             cart = [];
             updateCartDisplay();
-            closeOrderModal();
         }
 
         // Function to toggle the QR code display
@@ -652,14 +615,14 @@
             const qrImage = document.getElementById('payment-qr-image');
 
             if (paymentMethod === 'online') {
-                // Mock QR code image for demonstration
-                const mockQRCodeURL = "https://placehold.co/400x400/000000/FFFFFF?text=Scan+to+Pay";
+                // A publicly accessible image URL for the QR code
+                const mockQRCodeURL = "https://i.ibb.co/6P0D63R/phonepe-qr.jpg"; 
                 qrImage.src = mockQRCodeURL;
                 qrContainer.classList.remove('hidden');
                 noQrMessage.classList.add('hidden');
             } else {
                 qrContainer.classList.add('hidden');
-                noQrMessage.classList.add('hidden'); // Hide the message on cash option
+                noQrMessage.classList.add('hidden');
             }
         }
         
@@ -674,16 +637,13 @@
             const body = document.getElementById('mainBody');
             const colorOptions = document.querySelectorAll('.color-option');
             
-            // Remove active class from all options
             colorOptions.forEach(option => option.classList.remove('active'));
 
-            // Add active class to the clicked option
             const clickedOption = document.querySelector(`[onclick*="changeColorTheme('${themeName}')"]`);
             if (clickedOption) {
                 clickedOption.classList.add('active');
             }
 
-            // Change the body background based on the theme
             switch(themeName) {
                 case 'default':
                     body.className = 'bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
@@ -708,18 +668,15 @@
             }
         }
 
-
         // Dark Mode Toggle Script
         function toggleDarkMode() {
             const html = document.documentElement;
             html.classList.toggle('dark');
             const isDark = html.classList.contains('dark');
             
-            // Toggle the visibility of the sun and moon icons
             document.getElementById('moon-icon').classList.toggle('hidden', isDark);
             document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
 
-            // Save the user's preference to local storage
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
 
