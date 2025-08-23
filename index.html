@@ -146,6 +146,7 @@
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">Single Items</h2>
             <div class="grid md:grid-cols-3 gap-6">
+                <!-- Maggi Card -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4">🍜</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi</h3>
@@ -169,6 +170,7 @@
                         </button>
                     </div>
                 </div>
+                <!-- Takatak Card (Corrected) -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4">🌶️</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Takatak</h3>
@@ -179,36 +181,37 @@
                         <button onclick="changeQuantity('kurkure', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="buyNow('Kurkure', 35, 'kurkure')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                        <button onclick="buyNow('Takatak', 35, 'kurkure')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                             </svg>
                             Buy Now
                         </button>
-                        <button onclick="addToCart('Kurkure', 35, 'kurkure')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="addToCart('Takatak', 35, 'kurkure')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
                             </svg>
                         </button>
                     </div>
                 </div>
+                <!-- Lays Card (Corrected) -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4">🥔🥔</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Lays</h3>
-                    <p id="kitkat-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹35</p>
+                    <p id="lays-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹35</p>
                     <div class="flex items-center justify-center mb-4">
-                        <button onclick="changeQuantity('kitkat', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="kitkat-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
-                        <button onclick="changeQuantity('kitkat', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                        <button onclick="changeQuantity('lays', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="lays-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
+                        <button onclick="changeQuantity('lays', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="buyNow('KitKat', 30, 'kitkat')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                        <button onclick="buyNow('Lays', 35, 'lays')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                             </svg>
                             Buy Now
                         </button>
-                        <button onclick="addToCart('KitKat', 30, 'kitkat')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="addToCart('Lays', 35, 'lays')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
                             </svg>
@@ -232,13 +235,13 @@
                         <button onclick="changeQuantity('combo1', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="buyNow('Maggi + Kurkure', 45, 'combo1')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                        <button onclick="buyNow('Maggi + Takatak', 45, 'combo1')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                             </svg>
                             Buy Now
                         </button>
-                        <button onclick="addToCart('Maggi + Kurkure', 45, 'combo1')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="addToCart('Maggi + Takatak', 45, 'combo1')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
                             </svg>
@@ -280,13 +283,13 @@
                         <button onclick="changeQuantity('combo3', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="buyNow('Kurkure + Lays', 60, 'combo3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
+                        <button onclick="buyNow('Takatak + Lays', 60, 'combo3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                             </svg>
                             Buy Now
                         </button>
-                        <button onclick="addToCart('Kurkure + Lays', 60, 'combo3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="addToCart('Takatak + Lays', 60, 'combo3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
                             </svg>
@@ -435,31 +438,47 @@
         // Data structure to hold the state of the app
         const items = {
             'maggi': { name: 'Maggi', price: 15, qty: 1, stock: 'high' },
-            'kurkure': { name: 'Kurkure', price: 35, qty: 1, stock: 'medium' },
-            'kitkat': { name: 'KitKat', price: 30, qty: 1, stock: 'low' },
-            'combo1': { name: 'Maggi + Kurkure', price: 45, qty: 1, stock: 'high' },
+            'kurkure': { name: 'Takatak', price: 35, qty: 1, stock: 'medium' }, // Corrected name
+            'lays': { name: 'Lays', price: 35, qty: 1, stock: 'low' }, // Corrected item
+            'combo1': { name: 'Maggi + Takatak', price: 45, qty: 1, stock: 'high' }, // Corrected name
             'combo2': { name: 'Maggi + Lays', price: 45, qty: 1, stock: 'high' },
-            'combo3': { name: 'Kurkure + Lays', price: 60, qty: 1, stock: 'high' },
+            'combo3': { name: 'Takatak + Lays', price: 60, qty: 1, stock: 'high' }, // Corrected name
             'ultimate': { name: 'Ultimate Combo', price: 75, qty: 1, stock: 'high' },
         };
         let cart = [];
 
-        // Function to update the quantity display for an item
+        // Corrected function to update the quantity AND price display for an item
         function changeQuantity(itemId, change) {
             const qtyElement = document.getElementById(`${itemId}-qty`);
+            const priceElement = document.getElementById(`${itemId}-price`);
+            
+            // This check prevents errors if an element is not found
+            if (!qtyElement || !priceElement) return;
+
+            const basePrice = items[itemId].price;
             let currentQty = parseInt(qtyElement.innerText);
             currentQty += change;
+
             if (currentQty < 1) {
                 currentQty = 1;
             }
-            qtyElement.innerText = currentQty;
+
             items[itemId].qty = currentQty;
+            qtyElement.innerText = currentQty;
+
+            const newPrice = basePrice * currentQty;
+            // For combo packs, we keep the original text, for single items we just show the price
+            if (priceElement.innerHTML.includes("span")) {
+                 priceElement.innerHTML = `₹${newPrice} <span class="text-sm text-green-500">${priceElement.querySelector('span').innerText}</span>`;
+            } else {
+                 priceElement.innerText = `₹${newPrice}`;
+            }
         }
 
         // Function to add an item to the cart
         function addToCart(itemName, itemPrice, itemId) {
             const qty = items[itemId].qty;
-            const existingItemIndex = cart.findIndex(item => item.id === itemId);
+            const existingItemIndex = cart.findIndex(item => item.name === itemName);
 
             if (existingItemIndex > -1) {
                 cart[existingItemIndex].qty += qty;
@@ -509,8 +528,7 @@
                         <span class="font-bold text-blue-600 dark:text-blue-400">₹${itemTotal}</span>
                         <button onclick="removeItemFromCart(${index})" class="ml-4 text-red-500 hover:text-red-700">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-1.41-1.41-1.41 1.41-5.65-5.65-1.41 1.41 5.65 5.65-1.41 1.41 1.41 1.41 5.65-5.65 1.41-1.41z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-1.41-1.41-1.41 1.41-5.65-5.65-1.41 1.41 5.65 5.65-1.41 1.41 1.41 1.41 5.65-5.65 1.41-1.41z" transform="rotate(45 12 12)"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
                     `;
@@ -521,7 +539,7 @@
                 cartTotalContainer.classList.remove('hidden');
                 checkoutBtn.classList.remove('hidden');
             }
-            document.getElementById('cartCount').innerText = cart.length;
+            document.getElementById('cartCount').innerText = cart.reduce((acc, item) => acc + item.qty, 0);
         }
 
         // Function to remove an item from the cart
@@ -542,7 +560,7 @@
                 total += itemTotal;
                 summaryHTML += `<li class="mb-1">${item.name} x ${item.qty} = ₹${itemTotal}</li>`;
             });
-            summaryHTML += `<li class="font-bold border-t border-gray-300 mt-2 pt-2">Total: ₹${total}</li>`;
+            summaryHTML += `<li class="font-bold border-t border-gray-300 mt-2 pt-2 dark:border-gray-600">Total: ₹${total}</li>`;
             summaryHTML += '</ul>';
             summary.innerHTML = summaryHTML;
             modal.classList.remove('hidden');
@@ -556,7 +574,7 @@
             modal.classList.remove('flex');
         }
 
-        // UPDATED FUNCTION: Gathers form data and redirects to WhatsApp
+        // Gathers form data and redirects to WhatsApp
         function handleOrderSubmission() {
             const name = document.getElementById('customerName').value;
             const hostel = document.getElementById('hostelName').value;
@@ -564,13 +582,12 @@
             const phone = document.getElementById('phoneNumber').value;
             const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-            // Simple validation to ensure all required fields are filled
             if (!name || !hostel || !room || !phone) {
-                // You can add a more robust UI message here instead of an alert
+                // You can add a more robust UI message here
+                alert('Please fill out all the details!');
                 return;
             }
             
-            // Build the message content for WhatsApp
             let message = "Hi SnackStation, I would like to place an order.\n\n";
             
             message += "*Customer Details:*\n";
@@ -592,16 +609,11 @@
             
             message += "Please confirm my order and let me know the estimated delivery time.";
             
-            // URL-encode the message to make it safe for a URL
             const encodedMessage = encodeURIComponent(message);
-            
-            // Construct the final WhatsApp URL with your number and the message
             const whatsappUrl = `https://wa.me/916205574746?text=${encodedMessage}`;
             
-            // Open the WhatsApp chat in a new tab
             window.open(whatsappUrl, '_blank');
             
-            // Close the modal and clear the cart after the user is redirected
             closeOrderModal();
             cart = [];
             updateCartDisplay();
@@ -615,7 +627,6 @@
             const qrImage = document.getElementById('payment-qr-image');
 
             if (paymentMethod === 'online') {
-                // A publicly accessible image URL for the QR code
                 const mockQRCodeURL = "https://i.ibb.co/6P0D63R/phonepe-qr.jpg"; 
                 qrImage.src = mockQRCodeURL;
                 qrContainer.classList.remove('hidden');
@@ -696,4 +707,3 @@
     </script>
 </body>
 </html>
-
