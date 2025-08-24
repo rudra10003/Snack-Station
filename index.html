@@ -84,7 +84,6 @@
     </style>
 </head>
 <body id="mainBody" class="bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100">
-    <!-- Announcement Modal -->
     <div id="announcementModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 dark:bg-opacity-70">
         <div class="bg-yellow-100 border-2 border-yellow-300 rounded-lg shadow-lg p-6 w-96 relative animate-blink dark:bg-yellow-900 dark:border-yellow-700">
             <button onclick="closeAnnouncement()" class="absolute top-2 right-2 text-yellow-800 hover:text-yellow-900 dark:text-yellow-200 dark:hover:text-yellow-100">
@@ -93,7 +92,16 @@
                 </svg>
             </button>
             <h2 class="text-lg font-bold text-yellow-900 mb-2 dark:text-yellow-100">⚡ Announcement</h2>
-            <p class="text-yellow-800 font-medium dark:text-yellow-200">We are working on payment gateways so use <b>Cash on Delivery</b>.</p>
+            <p class="text-yellow-800 font-medium dark:text-yellow-200 mb-2">
+                Our operating hours are:
+                <br>
+                <b>Every Night:</b> 12:00 AM to 02:15 AM
+                <br>
+                <b>Weekends:</b> 10:00 AM - 02:00 AM (next day)
+            </p>
+            <p class="text-yellow-800 font-medium dark:text-yellow-200">
+                We are working on payment gateways so for now please use <b>Cash on Delivery</b>.
+            </p>
         </div>
     </div>
     <script>
@@ -102,7 +110,6 @@
         }
     </script>
 
-    <!-- Header -->
     <header class="gradient-header text-white p-4 shadow-lg sticky top-0 z-30">
         <div class="container mx-auto flex justify-between items-center">
             <div>
@@ -132,7 +139,6 @@
         </div>
     </header>
 
-    <!-- Color palette -->
     <div class="color-palette bg-white dark:bg-gray-800">
         <h4 class="text-sm font-semibold mb-3 text-gray-800 text-center dark:text-gray-100">Colors</h4>
         <div class="space-y-2">
@@ -146,11 +152,9 @@
     </div>
 
     <main class="container mx-auto p-6">
-        <!-- Single Items Section -->
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">Single Items</h2>
             <div class="grid md:grid-cols-3 gap-6">
-                <!-- Maggi Card with NEW SVG Icon -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="h-20 flex items-center justify-center mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-20 h-20">
@@ -184,7 +188,6 @@
                         </button>
                     </div>
                 </div>
-                <!-- Takatak Card -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🌶️</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Takatak</h3>
@@ -208,7 +211,6 @@
                         </button>
                     </div>
                 </div>
-                <!-- Lays Card -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🥔🥔</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Lays</h3>
@@ -235,20 +237,19 @@
             </div>
         </section>
 
-        <!-- Combo Packs Section -->
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">Combo Packs</h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
-                           <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"/>
-                           <path d="M10 20C10 14.477 14.477 10 20 10H80C85.523 10 90 14.477 90 20V40H10V20Z" fill="#d9232d"/>
-                           <text x="50" y="30" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold" text-anchor="middle">Maggi</text>
-                           <circle cx="50" cy="65" r="20" fill="#d9232d"/>
-                           <circle cx="50" cy="65" r="18" fill="#ffde00" stroke="#f3a32c" stroke-width="2"/>
-                           <path d="M40 62 C 45 58, 50 64, 55 60 S 65 58, 60 65" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
-                           <path d="M42 68 C 47 64, 52 70, 57 66 S 67 64, 62 71" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"/>
+                            <path d="M10 20C10 14.477 14.477 10 20 10H80C85.523 10 90 14.477 90 20V40H10V20Z" fill="#d9232d"/>
+                            <text x="50" y="30" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold" text-anchor="middle">Maggi</text>
+                            <circle cx="50" cy="65" r="20" fill="#d9232d"/>
+                            <circle cx="50" cy="65" r="18" fill="#ffde00" stroke="#f3a32c" stroke-width="2"/>
+                            <path d="M40 62 C 45 58, 50 64, 55 60 S 65 58, 60 65" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <path d="M42 68 C 47 64, 52 70, 57 66 S 67 64, 62 71" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
                         </svg>
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🌶️</span>
@@ -276,15 +277,15 @@
                 </div>
 
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
-                     <div class="h-16 flex items-center justify-center space-x-2 mb-4">
+                    <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
-                           <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"/>
-                           <path d="M10 20C10 14.477 14.477 10 20 10H80C85.523 10 90 14.477 90 20V40H10V20Z" fill="#d9232d"/>
-                           <text x="50" y="30" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold" text-anchor="middle">Maggi</text>
-                           <circle cx="50" cy="65" r="20" fill="#d9232d"/>
-                           <circle cx="50" cy="65" r="18" fill="#ffde00" stroke="#f3a32c" stroke-width="2"/>
-                           <path d="M40 62 C 45 58, 50 64, 55 60 S 65 58, 60 65" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
-                           <path d="M42 68 C 47 64, 52 70, 57 66 S 67 64, 62 71" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"/>
+                            <path d="M10 20C10 14.477 14.477 10 20 10H80C85.523 10 90 14.477 90 20V40H10V20Z" fill="#d9232d"/>
+                            <text x="50" y="30" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold" text-anchor="middle">Maggi</text>
+                            <circle cx="50" cy="65" r="20" fill="#d9232d"/>
+                            <circle cx="50" cy="65" r="18" fill="#ffde00" stroke="#f3a32c" stroke-width="2"/>
+                            <path d="M40 62 C 45 58, 50 64, 55 60 S 65 58, 60 65" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <path d="M42 68 C 47 64, 52 70, 57 66 S 67 64, 62 71" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
                         </svg>
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🥔🥔</span>
@@ -337,20 +338,19 @@
             </div>
         </section>
 
-        <!-- Ultimate Combo Section -->
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">Ultimate Combo</h2>
             <div class="flex justify-center">
                 <div class="item-card rounded-xl p-8 shadow-lg max-w-md w-full bg-white dark:bg-gray-800">
                     <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
-                           <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"/>
-                           <path d="M10 20C10 14.477 14.477 10 20 10H80C85.523 10 90 14.477 90 20V40H10V20Z" fill="#d9232d"/>
-                           <text x="50" y="30" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold" text-anchor="middle">Maggi</text>
-                           <circle cx="50" cy="65" r="20" fill="#d9232d"/>
-                           <circle cx="50" cy="65" r="18" fill="#ffde00" stroke="#f3a32c" stroke-width="2"/>
-                           <path d="M40 62 C 45 58, 50 64, 55 60 S 65 58, 60 65" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
-                           <path d="M42 68 C 47 64, 52 70, 57 66 S 67 64, 62 71" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"/>
+                            <path d="M10 20C10 14.477 14.477 10 20 10H80C85.523 10 90 14.477 90 20V40H10V20Z" fill="#d9232d"/>
+                            <text x="50" y="30" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold" text-anchor="middle">Maggi</text>
+                            <circle cx="50" cy="65" r="20" fill="#d9232d"/>
+                            <circle cx="50" cy="65" r="18" fill="#ffde00" stroke="#f3a32c" stroke-width="2"/>
+                            <path d="M40 62 C 45 58, 50 64, 55 60 S 65 58, 60 65" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <path d="M42 68 C 47 64, 52 70, 57 66 S 67 64, 62 71" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"/>
                         </svg>
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🌶️</span>
@@ -382,7 +382,6 @@
         </section>
     </main>
 
-    <!-- Cart Sidebar -->
     <div id="cartSidebar" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 dark:bg-gray-800">
         <div class="p-6 flex flex-col h-full">
             <div class="flex justify-between items-center mb-6">
@@ -408,7 +407,6 @@
         </div>
     </div>
 
-    <!-- Order Modal -->
     <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4 dark:bg-opacity-70">
         <div class="bg-white rounded-xl p-8 max-w-md w-full max-h-screen overflow-y-auto dark:bg-gray-800">
             <h3 class="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Order Details</h3>
@@ -480,7 +478,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="gradient-header text-white text-center py-6 mt-12 dark:bg-gray-800 dark:text-gray-100">
         <p class="text-lg font-semibold">Powered by SnackStation</p>
     </footer>
@@ -693,7 +690,7 @@
             const qrImage = document.getElementById('payment-qr-image');
 
             if (paymentMethod === 'online') {
-                const mockQRCodeURL = "https://i.ibb.co/6P0D63R/phonepe-qr.jpg"; 
+                const mockQRCodeURL = "https://i.ibb.co/6P0D63R/phonepe-qr.jpg";
                 qrImage.src = mockQRCodeURL;
                 qrContainer.classList.remove('hidden');
                 noQrMessage.classList.add('hidden');
