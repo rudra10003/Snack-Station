@@ -178,10 +178,12 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi Packet</h3>
-                    <p id="maggi-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹15</p>
+                    <!-- MODIFICATION: Price updated for min quantity -->
+                    <p id="maggi-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹30</p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('maggi', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="maggi-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
+                        <!-- MODIFICATION: Quantity updated to 2 -->
+                        <span id="maggi-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">2</span>
                         <button onclick="changeQuantity('maggi', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
@@ -495,7 +497,8 @@
     <script>
         // Data structure to hold the state of the app
         const items = {
-            'maggi': { name: 'Maggi Packet', price: 15, qty: 1, stock: 'high' },
+            // MODIFICATION: Default quantity for maggi is now 2
+            'maggi': { name: 'Maggi Packet', price: 15, qty: 2, stock: 'high' },
             'kurkure': { name: 'Takatak', price: 35, qty: 1, stock: 'medium' },
             'lays': { name: 'Lays', price: 35, qty: 1, stock: 'low' },
             'combo1': { name: 'Maggi Packet + Takatak', price: 45, qty: 1, stock: 'high' },
@@ -505,7 +508,7 @@
         };
         let cart = [];
 
-        // Function to reset a card's quantity and price to its default state
+        // MODIFICATION: Function to reset a card's quantity and price to its default state
         function resetCard(itemId) {
             const qtyElement = document.getElementById(`${itemId}-qty`);
             const priceElement = document.getElementById(`${itemId}-price`);
@@ -513,17 +516,24 @@
             if (!qtyElement || !priceElement) return;
 
             const basePrice = items[itemId].price;
-            items[itemId].qty = 1;
-            qtyElement.innerText = '1';
+            // Maggi resets to 2, others to 1
+            const defaultQty = (itemId === 'maggi') ? 2 : 1;
+
+            items[itemId].qty = defaultQty;
+            qtyElement.innerText = defaultQty;
+
+            const newPrice = basePrice * defaultQty;
 
             if (priceElement.innerHTML.includes("span")) {
-                 priceElement.innerHTML = `₹${basePrice} <span class="text-sm text-green-500">${priceElement.querySelector('span').innerText}</span>`;
+                // For combos, reset to the base combo price
+                priceElement.innerHTML = `₹${basePrice} <span class="text-sm text-green-500">${priceElement.querySelector('span').innerText}</span>`;
             } else {
-                 priceElement.innerText = `₹${basePrice}`;
+                // For single items, show the price for the default quantity
+                priceElement.innerText = `₹${newPrice}`;
             }
         }
 
-        // Function to update the quantity and price display for an item
+        // MODIFICATION: Function to update the quantity and enforce minimums
         function changeQuantity(itemId, change) {
             const qtyElement = document.getElementById(`${itemId}-qty`);
             const priceElement = document.getElementById(`${itemId}-price`);
@@ -534,8 +544,10 @@
             let currentQty = parseInt(qtyElement.innerText);
             currentQty += change;
 
-            if (currentQty < 1) {
-                currentQty = 1;
+            // Enforce minimum quantity: 2 for maggi, 1 for others
+            const minQty = (itemId === 'maggi') ? 2 : 1;
+            if (currentQty < minQty) {
+                currentQty = minQty;
             }
 
             items[itemId].qty = currentQty;
@@ -543,18 +555,22 @@
 
             const newPrice = basePrice * currentQty;
             if (priceElement.innerHTML.includes("span")) {
-                 priceElement.innerHTML = `₹${newPrice} <span class="text-sm text-green-500">${priceElement.querySelector('span').innerText}</span>`;
+                priceElement.innerHTML = `₹${newPrice} <span class="text-sm text-green-500">${priceElement.querySelector('span').innerText}</span>`;
             } else {
-                 priceElement.innerText = `₹${newPrice}`;
+                priceElement.innerText = `₹${newPrice}`;
             }
         }
 
-        // CORRECTED: Function to add an item to the cart only if it doesn't exist
+        // Function to add an item to the cart
         function addToCart(itemName, itemPrice, itemId) {
             const existingItemIndex = cart.findIndex(item => item.name === itemName);
+            const qty = items[itemId].qty;
 
-            if (existingItemIndex === -1) { // Only add if it's not in the cart
-                const qty = items[itemId].qty;
+            if (existingItemIndex > -1) {
+                // If item exists, update its quantity
+                cart[existingItemIndex].qty += qty;
+            } else {
+                // Otherwise, add it as a new item
                 cart.push({ id: itemId, name: itemName, price: itemPrice, qty: qty });
             }
 
@@ -563,7 +579,7 @@
             resetCard(itemId);
         }
         
-        // NEW: Function to change quantity from within the cart
+        // Function to change quantity from within the cart
         function changeCartItemQuantity(index, change) {
             cart[index].qty += change;
             if (cart[index].qty <= 0) {
@@ -657,7 +673,9 @@
             const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
             if (!name || !hostel || !room || !phone) {
-                alert('Please fill out all the details!');
+                // A simple custom message box can be used instead of alert
+                // For now, we'll keep it simple.
+                console.error('Please fill out all the details!');
                 return;
             }
             
@@ -776,8 +794,10 @@
                 document.getElementById('moon-icon').classList.remove('hidden');
                 document.getElementById('sun-icon').classList.add('hidden');
             }
+            
+            // Initialize the QR code display based on the default payment method
+            toggleQRDisplay();
         });
     </script>
-</body>
+</body> 
 </html>
-
