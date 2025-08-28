@@ -178,72 +178,28 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi Packet</h3>
-                    <!-- MODIFICATION: Price updated for min quantity -->
                     <p id="maggi-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹30</p>
-                    <div class="flex items-center justify-center mb-4">
-                        <button onclick="changeQuantity('maggi', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <!-- MODIFICATION: Quantity updated to 2 -->
-                        <span id="maggi-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">2</span>
-                        <button onclick="changeQuantity('maggi', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button onclick="buyNow('Maggi Packet', 15, 'maggi')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                            </svg>
-                            Buy Now
-                        </button>
-                        <button onclick="addToCart('Maggi Packet', 15, 'maggi')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
-                            </svg>
-                        </button>
+                    <!-- MODIFICATION: Replaced buttons with Out of Stock message -->
+                    <div class="mt-10 text-center">
+                        <p class="text-red-500 font-bold text-lg py-2 px-4 bg-red-100 dark:bg-red-900/50 rounded-lg">Out of Stock</p>
                     </div>
                 </div>
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🌶️</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Takatak</h3>
                     <p id="kurkure-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹35</p>
-                    <div class="flex items-center justify-center mb-4">
-                        <button onclick="changeQuantity('kurkure', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="kurkure-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
-                        <button onclick="changeQuantity('kurkure', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button onclick="buyNow('Takatak', 35, 'kurkure')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                            </svg>
-                            Buy Now
-                        </button>
-                        <button onclick="addToCart('Takatak', 35, 'kurkure')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
-                            </svg>
-                        </button>
+                    <!-- MODIFICATION: Replaced buttons with Out of Stock message -->
+                    <div class="mt-10 text-center">
+                        <p class="text-red-500 font-bold text-lg py-2 px-4 bg-red-100 dark:bg-red-900/50 rounded-lg">Out of Stock</p>
                     </div>
                 </div>
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🥔🥔</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Lays</h3>
                     <p id="lays-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹35</p>
-                    <div class="flex items-center justify-center mb-4">
-                        <button onclick="changeQuantity('lays', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="lays-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
-                        <button onclick="changeQuantity('lays', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button onclick="buyNow('Lays', 35, 'lays')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                            </svg>
-                            Buy Now
-                        </button>
-                        <button onclick="addToCart('Lays', 35, 'lays')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
-                            </svg>
-                        </button>
+                    <!-- MODIFICATION: Replaced buttons with Out of Stock message -->
+                    <div class="mt-10 text-center">
+                        <p class="text-red-500 font-bold text-lg py-2 px-4 bg-red-100 dark:bg-red-900/50 rounded-lg">Out of Stock</p>
                     </div>
                 </div>
             </div>
@@ -268,23 +224,9 @@
                     </div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi Packet + Takatak</h3>
                     <p id="combo1-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
-                    <div class="flex items-center justify-center mb-4">
-                        <button onclick="changeQuantity('combo1', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="combo1-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
-                        <button onclick="changeQuantity('combo1', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button onclick="buyNow('Maggi Packet + Takatak', 45, 'combo1')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                            </svg>
-                            Buy Now
-                        </button>
-                        <button onclick="addToCart('Maggi Packet + Takatak', 45, 'combo1')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
-                            </svg>
-                        </button>
+                    <!-- MODIFICATION: Replaced buttons with Out of Stock message -->
+                    <div class="mt-10 text-center">
+                        <p class="text-red-500 font-bold text-lg py-2 px-4 bg-red-100 dark:bg-red-900/50 rounded-lg">Out of Stock</p>
                     </div>
                 </div>
 
@@ -304,23 +246,9 @@
                     </div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi Packet + Lays</h3>
                     <p id="combo2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
-                    <div class="flex items-center justify-center mb-4">
-                        <button onclick="changeQuantity('combo2', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="combo2-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
-                        <button onclick="changeQuantity('combo2', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button onclick="buyNow('Maggi Packet + Lays', 45, 'combo2')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                            </svg>
-                            Buy Now
-                        </button>
-                        <button onclick="addToCart('Maggi Packet + Lays', 45, 'combo2')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
-                            </svg>
-                        </button>
+                    <!-- MODIFICATION: Replaced buttons with Out of Stock message -->
+                    <div class="mt-10 text-center">
+                        <p class="text-red-500 font-bold text-lg py-2 px-4 bg-red-100 dark:bg-red-900/50 rounded-lg">Out of Stock</p>
                     </div>
                 </div>
 
@@ -328,23 +256,9 @@
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🌶️ + 🥔🥔</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Takatak + Lays</h3>
                     <p id="combo3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹60 <span class="text-sm text-green-500">(Save 10 rs)</span></p>
-                    <div class="flex items-center justify-center mb-4">
-                        <button onclick="changeQuantity('combo3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="combo3-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
-                        <button onclick="changeQuantity('combo3', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button onclick="buyNow('Takatak + Lays', 60, 'combo3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                            </svg>
-                            Buy Now
-                        </button>
-                        <button onclick="addToCart('Takatak + Lays', 60, 'combo3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
-                            </svg>
-                        </button>
+                    <!-- MODIFICATION: Replaced buttons with Out of Stock message -->
+                    <div class="mt-10 text-center">
+                        <p class="text-red-500 font-bold text-lg py-2 px-4 bg-red-100 dark:bg-red-900/50 rounded-lg">Out of Stock</p>
                     </div>
                 </div>
             </div>
@@ -371,23 +285,9 @@
                     </div>
                     <h3 class="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-white">Maggi Packet + Takatak + Lays</h3>
                     <p id="ultimate-price" class="text-3xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹75 <span class="text-sm text-green-500">(Save 10 rs)</span></p>
-                    <div class="flex items-center justify-center mb-6">
-                        <button onclick="changeQuantity('ultimate', -1)" class="bg-red-500 text-white w-10 h-10 rounded-full hover:bg-red-600 transition-colors text-lg">-</button>
-                        <span id="ultimate-qty" class="mx-6 text-xl font-semibold text-gray-800 dark:text-gray-200">1</span>
-                        <button onclick="changeQuantity('ultimate', 1)" class="bg-green-500 text-white w-10 h-10 rounded-full hover:bg-green-600 transition-colors text-lg">+</button>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button onclick="buyNow('Maggi Packet + Takatak + Lays', 75, 'ultimate')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold text-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                            </svg>
-                            Buy Now
-                        </button>
-                        <button onclick="addToCart('Maggi Packet + Takatak + Lays', 75, 'ultimate')" class="bg-gray-500 text-white py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path>
-                            </svg>
-                        </button>
+                    <!-- MODIFICATION: Replaced buttons with Out of Stock message -->
+                    <div class="mt-10 text-center">
+                        <p class="text-red-500 font-bold text-lg py-2 px-4 bg-red-100 dark:bg-red-900/50 rounded-lg">Out of Stock</p>
                     </div>
                 </div>
             </div>
@@ -497,7 +397,6 @@
     <script>
         // Data structure to hold the state of the app
         const items = {
-            // MODIFICATION: Default quantity for maggi is now 2
             'maggi': { name: 'Maggi Packet', price: 15, qty: 2, stock: 'high' },
             'kurkure': { name: 'Takatak', price: 35, qty: 1, stock: 'medium' },
             'lays': { name: 'Lays', price: 35, qty: 1, stock: 'low' },
@@ -508,7 +407,10 @@
         };
         let cart = [];
 
-        // MODIFICATION: Function to reset a card's quantity and price to its default state
+        // All purchasing functions are now effectively disabled by removing the buttons from the UI.
+        // The JavaScript functions below are kept for potential future use when items are back in stock,
+        // but they are not currently callable from the main page.
+
         function resetCard(itemId) {
             const qtyElement = document.getElementById(`${itemId}-qty`);
             const priceElement = document.getElementById(`${itemId}-price`);
@@ -516,24 +418,18 @@
             if (!qtyElement || !priceElement) return;
 
             const basePrice = items[itemId].price;
-            // Maggi resets to 2, others to 1
             const defaultQty = (itemId === 'maggi') ? 2 : 1;
-
             items[itemId].qty = defaultQty;
             qtyElement.innerText = defaultQty;
-
             const newPrice = basePrice * defaultQty;
 
             if (priceElement.innerHTML.includes("span")) {
-                // For combos, reset to the base combo price
                 priceElement.innerHTML = `₹${basePrice} <span class="text-sm text-green-500">${priceElement.querySelector('span').innerText}</span>`;
             } else {
-                // For single items, show the price for the default quantity
                 priceElement.innerText = `₹${newPrice}`;
             }
         }
 
-        // MODIFICATION: Function to update the quantity and enforce minimums
         function changeQuantity(itemId, change) {
             const qtyElement = document.getElementById(`${itemId}-qty`);
             const priceElement = document.getElementById(`${itemId}-price`);
@@ -544,7 +440,6 @@
             let currentQty = parseInt(qtyElement.innerText);
             currentQty += change;
 
-            // Enforce minimum quantity: 2 for maggi, 1 for others
             const minQty = (itemId === 'maggi') ? 2 : 1;
             if (currentQty < minQty) {
                 currentQty = minQty;
@@ -561,16 +456,13 @@
             }
         }
 
-        // Function to add an item to the cart
         function addToCart(itemName, itemPrice, itemId) {
             const existingItemIndex = cart.findIndex(item => item.name === itemName);
             const qty = items[itemId].qty;
 
             if (existingItemIndex > -1) {
-                // If item exists, update its quantity
                 cart[existingItemIndex].qty += qty;
             } else {
-                // Otherwise, add it as a new item
                 cart.push({ id: itemId, name: itemName, price: itemPrice, qty: qty });
             }
 
@@ -579,24 +471,20 @@
             resetCard(itemId);
         }
         
-        // Function to change quantity from within the cart
         function changeCartItemQuantity(index, change) {
             cart[index].qty += change;
             if (cart[index].qty <= 0) {
-                cart.splice(index, 1); // Remove item if quantity is 0 or less
+                cart.splice(index, 1);
             }
             updateCartDisplay();
         }
 
-
-        // Function to handle Buy Now action
         function buyNow(itemName, itemPrice, itemId) {
             cart = [{ id: itemId, name: itemName, price: itemPrice, qty: items[itemId].qty }];
             openOrderModal();
             resetCard(itemId);
         }
 
-        // Function to update the cart sidebar content
         function updateCartDisplay() {
             const cartItemsContainer = document.getElementById('cartItems');
             const cartTotalContainer = document.getElementById('cartTotal');
@@ -638,8 +526,10 @@
             document.getElementById('cartCount').innerText = totalQty;
         }
         
-        // Function to open the order modal
         function openOrderModal() {
+            // This function will not be called if cart is empty, but we keep it for structure
+            if(cart.length === 0) return; 
+
             const modal = document.getElementById('orderModal');
             const summary = document.getElementById('orderSummary');
             let summaryHTML = '<ul>';
@@ -657,14 +547,12 @@
             modal.classList.add('flex');
         }
 
-        // Function to close the order modal
         function closeOrderModal() {
             const modal = document.getElementById('orderModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
 
-        // Gathers form data and redirects to WhatsApp
         function handleOrderSubmission() {
             const name = document.getElementById('customerName').value;
             const hostel = document.getElementById('hostelName').value;
@@ -673,20 +561,16 @@
             const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
             if (!name || !hostel || !room || !phone) {
-                // A simple custom message box can be used instead of alert
-                // For now, we'll keep it simple.
                 console.error('Please fill out all the details!');
                 return;
             }
             
             let message = "Hi SnackStation, I would like to place an order.\n\n";
-            
             message += "*Customer Details:*\n";
             message += `Name: ${name}\n`;
             message += `Hostel: ${hostel}\n`;
             message += `Room No: ${room}\n`;
             message += `Phone: ${phone}\n\n`;
-            
             message += "*Order Details:*\n";
             let total = 0;
             cart.forEach(item => {
@@ -694,10 +578,8 @@
                 total += itemTotal;
                 message += `- ${item.name} (x${item.qty}) = ₹${itemTotal}\n`;
             });
-            
             message += `\n*Total Amount:* ₹${total}\n`;
             message += `*Payment Method:* ${paymentMethod === 'online' ? 'Online Payment (PhonePe)' : 'Cash on Delivery'}\n\n`;
-            
             message += "Please confirm my order and let me know the estimated delivery time.";
             
             const encodedMessage = encodeURIComponent(message);
@@ -710,7 +592,6 @@
             updateCartDisplay();
         }
 
-        // Function to toggle the QR code display
         function toggleQRDisplay() {
             const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
             const qrContainer = document.getElementById('qr-code-container');
@@ -719,22 +600,20 @@
 
             if (paymentMethod === 'online') {
                 const mockQRCodeURL = "https://i.ibb.co/6P0D63R/phonepe-qr.jpg";
-                qrImage.src = mockQRCodeURL;
-                qrContainer.classList.remove('hidden');
-                noQrMessage.classList.add('hidden');
+                if(qrImage) qrImage.src = mockQRCodeURL;
+                if(qrContainer) qrContainer.classList.remove('hidden');
+                if(noQrMessage) noQrMessage.classList.add('hidden');
             } else {
-                qrContainer.classList.add('hidden');
-                noQrMessage.classList.add('hidden');
+                if(qrContainer) qrContainer.classList.add('hidden');
+                if(noQrMessage) noQrMessage.classList.add('hidden');
             }
         }
         
-        // Function to toggle the cart sidebar
         function toggleCart() {
             const cartSidebar = document.getElementById('cartSidebar');
             cartSidebar.classList.toggle('translate-x-full');
         }
 
-        // Function to change the color theme
         function changeColorTheme(themeName) {
             const body = document.getElementById('mainBody');
             const colorOptions = document.querySelectorAll('.color-option');
@@ -770,7 +649,6 @@
             }
         }
 
-        // Dark Mode Toggle Script
         function toggleDarkMode() {
             const html = document.documentElement;
             html.classList.toggle('dark');
@@ -782,7 +660,6 @@
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
 
-        // Check local storage on page load to apply the saved theme
         document.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
@@ -795,7 +672,6 @@
                 document.getElementById('sun-icon').classList.add('hidden');
             }
             
-            // Initialize the QR code display based on the default payment method
             toggleQRDisplay();
         });
     </script>
