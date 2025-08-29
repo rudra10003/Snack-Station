@@ -87,10 +87,308 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9K51EXH0G9"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+// ... existing code ... -->
       gtag('js', new Date());
     
       gtag('config', 'G-9K51EXH0G9');
+    </script>
+    <script>
+        // Data structure to hold the state of the app
+        const items = {
+            'maggi': { name: 'Slurpy Maggi Fix', price: 15, qty: 2, stock: 'high' },
+            'lays': { name: 'Lays Crunch Pop', price: 35, qty: 1, stock: 'low' },
+            'takatak': { name: 'TakaTak Zing Shot', price: 35, qty: 1, stock: 'medium' },
+            'oreo': { name: 'Oreo Choco Bites', price: 20, qty: 1, stock: 'high' },
+            'duo1': { name: 'Masala Madness', price: 45, qty: 1, stock: 'high' },
+            'duo2': { name: 'Crunch Noodle Punch', price: 45, qty: 1, stock: 'high' },
+            'duo3': { name: 'Tangy Crunch Blast', price: 60, qty: 1, stock: 'high' },
+            'duo4': { name: 'Sweet ’n’ Spicy Fix', price: 30, qty: 1, stock: 'high' },
+            'duo5': { name: 'Choco Zing Duo', price: 50, qty: 1, stock: 'high' },
+            'duo6': { name: 'Choco Crunch Treat', price: 55, qty: 1, stock: 'high' },
+            'trio1': { name: 'The Beast Box', price: 75, qty: 1, stock: 'high' },
+            'trio2': { name: 'Sweet Heat Box', price: 70, qty: 1, stock: 'high' },
+            'trio3': { name: 'Crunch Blast Box', price: 85, qty: 1, stock: 'high' },
+            'ultimate': { name: 'SnackStation Supreme 👑', price: 99, qty: 1, stock: 'high' },
+        };
+        let cart = [];
+
+        function resetCard(itemId) {
+            const qtyElement = document.getElementById(`${itemId}-qty`);
+            const priceElement = document.getElementById(`${itemId}-price`);
+            
+            if (!qtyElement || !priceElement) return;
+
+            const basePrice = items[itemId].price;
+            const defaultQty = (itemId === 'maggi') ? 2 : 1;
+
+            items[itemId].qty = defaultQty;
+            qtyElement.innerText = defaultQty;
+
+            const newPrice = basePrice * defaultQty;
+
+            if (priceElement.innerHTML.includes("span")) {
+                 const spanText = priceElement.querySelector('span').outerHTML;
+                 priceElement.innerHTML = `₹${basePrice} ${spanText}`;
+            } else {
+                priceElement.innerText = `₹${newPrice}`;
+            }
+        }
+
+        function changeQuantity(itemId, change) {
+            const qtyElement = document.getElementById(`${itemId}-qty`);
+            const priceElement = document.getElementById(`${itemId}-price`);
+            
+            if (!qtyElement || !priceElement) return;
+
+            const basePrice = items[itemId].price;
+            let currentQty = parseInt(qtyElement.innerText);
+            currentQty += change;
+
+            const minQty = (itemId === 'maggi') ? 2 : 1;
+            if (currentQty < minQty) {
+                currentQty = minQty;
+            }
+
+            items[itemId].qty = currentQty;
+            qtyElement.innerText = currentQty;
+
+            const newPrice = basePrice * currentQty;
+             if (priceElement.innerHTML.includes("span")) {
+                 const spanText = priceElement.querySelector('span').outerHTML;
+                 priceElement.innerHTML = `₹${newPrice} ${spanText}`;
+            } else {
+                priceElement.innerText = `₹${newPrice}`;
+            }
+        }
+
+        function addToCart(itemName, itemPrice, itemId) {
+            const existingItemIndex = cart.findIndex(item => item.name === itemName);
+            const qty = items[itemId].qty;
+
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].qty += qty;
+            } else {
+                cart.push({ id: itemId, name: itemName, price: itemPrice, qty: qty });
+            }
+
+            updateCartDisplay();
+            toggleCart();
+            resetCard(itemId);
+        }
+        
+        function changeCartItemQuantity(index, change) {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartDisplay();
+        }
+
+        function buyNow(itemName, itemPrice, itemId) {
+            cart = [{ id: itemId, name: itemName, price: itemPrice, qty: items[itemId].qty }];
+            openOrderModal();
+            resetCard(itemId);
+        }
+
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalContainer = document.getElementById('cartTotal');
+            const totalAmountElement = document.getElementById('totalAmount');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            let total = 0;
+            let totalQty = 0;
+
+            cartItemsContainer.innerHTML = '';
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center dark:text-gray-400">Your cart is empty</p>';
+                cartTotalContainer.classList.add('hidden');
+                checkoutBtn.classList.add('hidden');
+            } else {
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.qty;
+                    total += itemTotal;
+                    totalQty += item.qty;
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex justify-between items-center bg-gray-100 p-3 rounded-lg dark:bg-gray-700';
+                    itemDiv.innerHTML = `
+                        <div class="flex-1 mr-2">
+                            <h4 class="font-semibold text-gray-800 dark:text-white text-sm">${item.name}</h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">₹${item.price} x ${item.qty} = ₹${itemTotal}</p>
+                        </div>
+                        <div class="flex items-center">
+                            <button onclick="changeCartItemQuantity(${index}, -1)" class="bg-red-500 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center">-</button>
+                            <span class="mx-2 font-semibold text-sm">${item.qty}</span>
+                            <button onclick="changeCartItemQuantity(${index}, 1)" class="bg-green-500 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center">+</button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(itemDiv);
+                });
+
+                totalAmountElement.innerText = `₹${total}`;
+                cartTotalContainer.classList.remove('hidden');
+                checkoutBtn.classList.remove('hidden');
+            }
+            document.getElementById('cartCount').innerText = totalQty;
+        }
+        
+        function openOrderModal() {
+            const modal = document.getElementById('orderModal');
+            const summary = document.getElementById('orderSummary');
+            let summaryHTML = '<ul>';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                summaryHTML += `<li class="mb-1">${item.name} x ${item.qty} = ₹${itemTotal}</li>`;
+            });
+            summaryHTML += `<li class="font-bold border-t border-gray-300 mt-2 pt-2 dark:border-gray-600">Total: ₹${total}</li>`;
+            summaryHTML += '</ul>';
+            summary.innerHTML = summaryHTML;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeOrderModal() {
+            const modal = document.getElementById('orderModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function handleOrderSubmission() {
+            const name = document.getElementById('customerName').value;
+            const hostel = document.getElementById('hostelName').value;
+            const room = document.getElementById('roomNumber').value;
+            const phone = document.getElementById('phoneNumber').value;
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            if (!name || !hostel || !room || !phone) {
+                console.error('Please fill out all the details!');
+                return;
+            }
+            
+            let message = "Hi SnackStation, I would like to place an order.\n\n";
+            message += "*Customer Details:*\n";
+            message += `Name: ${name}\n`;
+            message += `Hostel: ${hostel}\n`;
+            message += `Room No: ${room}\n`;
+            message += `Phone: ${phone}\n\n`;
+            message += "*Order Details:*\n";
+            let total = 0;
+            cart.forEach(item => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                message += `- ${item.name} (x${item.qty}) = ₹${itemTotal}\n`;
+            });
+            
+            message += `\n*Total Amount:* ₹${total}\n`;
+            message += `*Payment Method:* ${paymentMethod === 'online' ? 'Online Payment (PhonePe)' : 'Cash on Delivery'}\n\n`;
+            message += "Please confirm my order and let me know the estimated delivery time.";
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/916205574746?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+            
+            closeOrderModal();
+            cart = [];
+            updateCartDisplay();
+        }
+
+        function toggleQRDisplay() {
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+            const qrContainer = document.getElementById('qr-code-container');
+            const noQrMessage = document.getElementById('no-qr-message');
+            const qrImage = document.getElementById('payment-qr-image');
+
+            if (paymentMethod === 'online') {
+                const mockQRCodeURL = "https://i.ibb.co/6P0D63R/phonepe-qr.jpg";
+                qrImage.src = mockQRCodeURL;
+                qrContainer.classList.remove('hidden');
+                noQrMessage.classList.add('hidden');
+            } else {
+                qrContainer.classList.add('hidden');
+                noQrMessage.classList.add('hidden');
+            }
+        }
+        
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            cartSidebar.classList.toggle('translate-x-full');
+        }
+        
+        function openTermsModal() {
+            const modal = document.getElementById('termsModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeTermsModal() {
+            const modal = document.getElementById('termsModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function changeColorTheme(themeName) {
+            const body = document.getElementById('mainBody');
+            const colorOptions = document.querySelectorAll('.color-option');
+            
+            colorOptions.forEach(option => option.classList.remove('active'));
+
+            const clickedOption = document.querySelector(`[onclick*="changeColorTheme('${themeName}')"]`);
+            if (clickedOption) {
+                clickedOption.classList.add('active');
+            }
+
+            switch(themeName) {
+                case 'default':
+                    body.className = 'bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                case 'coral':
+                    body.className = 'bg-gradient-to-br from-[#FCA5A5] via-[#FCA5A5] to-[#5EEAD4] min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                case 'mint':
+                    body.className = 'bg-gradient-to-br from-[#86EFAC] via-[#FDE047] to-[#FDBA74] min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                case 'rose':
+                    body.className = 'bg-gradient-to-br from-[#FCA5A5] via-[#F9A8D4] to-[#FDA4AF] min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                case 'lavender':
+                    body.className = 'bg-gradient-to-br from-[#C4B5FD] via-[#DDD6FE] to-[#A5B4FC] min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                case 'sky':
+                    body.className = 'bg-gradient-to-br from-[#7DD3FC] via-[#93C5FD] to-[#86EFAC] min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+                    break;
+                default:
+                    body.className = 'bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100';
+            }
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            
+            document.getElementById('moon-icon').classList.toggle('hidden', isDark);
+            document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
+
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.getElementById('moon-icon').classList.add('hidden');
+                document.getElementById('sun-icon').classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('moon-icon').classList.remove('hidden');
+                document.getElementById('sun-icon').classList.add('hidden');
+            }
+            
+            toggleQRDisplay();
+        });
     </script>
 </head>
 <body id="mainBody" class="bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100">
@@ -227,19 +525,19 @@
                         </button>
                     </div>
                 </div>
-                <!-- Bourbon Bliss Bites -->
+                <!-- Oreo Choco Bites -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🍪</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Bourbon Bliss Bites</h3>
-                    <p id="burban-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹20</p>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Oreo Choco Bites</h3>
+                    <p id="oreo-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹20</p>
                     <div class="flex items-center justify-center mb-4">
-                        <button onclick="changeQuantity('burban', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="burban-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
-                        <button onclick="changeQuantity('burban', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                        <button onclick="changeQuantity('oreo', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="oreo-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
+                        <button onclick="changeQuantity('oreo', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="buyNow('Bourbon Bliss Bites', 20, 'burban')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('Bourbon Bliss Bites', 20, 'burban')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('Oreo Choco Bites', 20, 'oreo')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Oreo Choco Bites', 20, 'oreo')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
@@ -267,7 +565,7 @@
                         <span class="text-4xl">🌶️</span>
                     </div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Masala Madness</h3>
-                    <p id="duo1-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45</p>
+                    <p id="duo1-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo1', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo1-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
@@ -296,7 +594,7 @@
                         <span class="text-4xl">🥔</span>
                     </div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Crunch Noodle Punch</h3>
-                    <p id="duo2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45</p>
+                    <p id="duo2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo2', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo2-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
@@ -311,7 +609,24 @@
                 </div>
                 <!-- Tangy Crunch Blast -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
-                    <div class="h-16 flex items-center justify-center space-x-2 mb-4">
+                    <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🌶️ + 🥔</div>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Tangy Crunch Blast</h3>
+                    <p id="duo3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹60 <span class="text-sm text-green-500">(Save 10 rs)</span></p>
+                    <div class="flex items-center justify-center mb-4">
+                        <button onclick="changeQuantity('duo3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="duo3-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
+                        <button onclick="changeQuantity('duo3', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                    </div>
+                     <div class="flex space-x-2">
+                        <button onclick="buyNow('Tangy Crunch Blast', 60, 'duo3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Tangy Crunch Blast', 60, 'duo3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- Sweet ’n’ Spicy Fix -->
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                     <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
                             <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"></rect>
                             <path d="M10 20C10 14.477 14.477 10 20 10H80C85.523 10 90 14.477 90 20V40H10V20Z" fill="#d9232d"></path>
@@ -325,7 +640,7 @@
                         <span class="text-4xl">🍪</span>
                     </div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Sweet ’n’ Spicy Fix</h3>
-                    <p id="duo4-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹30</p>
+                    <p id="duo4-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹30 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo4', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo4-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
@@ -342,7 +657,7 @@
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🌶️ + 🍪</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Choco Zing Duo</h3>
-                    <p id="duo5-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹50</p>
+                    <p id="duo5-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹50 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo5', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo5-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
@@ -381,7 +696,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- The Beast Box -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
-                    <div class="h-16 flex items-center justify-center space-x-2 mb-4">
+                     <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
                             <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"></rect>
                             <path d="M10 20C10 14.477 14.477 10 20 10H80C85.523 10 90 14.477 90 20V40H10V20Z" fill="#d9232d"></path>
@@ -435,8 +750,8 @@
                         <button onclick="changeQuantity('trio2', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                      <div class="flex space-x-2">
-                        <button onclick="buyNow('Sweet Heat Box', 65, 'trio2')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('Sweet Heat Box', 65, 'trio2')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('Sweet Heat Box', 70, 'trio2')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Sweet Heat Box', 70, 'trio2')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
@@ -445,15 +760,15 @@
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🥔+🌶️+🍪</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Crunch Blast Box</h3>
-                    <p id="trio3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹80 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
+                    <p id="trio3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹85 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('trio3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="trio3-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('trio3', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                      <div class="flex space-x-2">
-                        <button onclick="buyNow('Crunch Blast Box', 80, 'trio3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('Crunch Blast Box', 80, 'trio3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('Crunch Blast Box', 85, 'trio3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Crunch Blast Box', 85, 'trio3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
@@ -947,5 +1262,4 @@
     </script>
 </body>
 </html>
-
 
