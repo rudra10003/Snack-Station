@@ -92,7 +92,7 @@
     
       gtag('config', 'G-9K51EXH0G9');
     </script>
-    <!-- MOVED SCRIPT TO HEAD TO FIX REFERENCE ERROR -->
+    <!-- SCRIPT LOGIC -->
     <script>
         // Data structure to hold the state of the app
         const items = {
@@ -131,7 +131,7 @@
                  const spanText = priceElement.querySelector('span').outerHTML;
                  priceElement.innerHTML = `₹${basePrice} ${spanText}`;
             } else {
-                priceElement.innerText = `₹${newPrice}`;
+                 priceElement.innerText = `₹${newPrice}`;
             }
         }
 
@@ -155,23 +155,20 @@
 
             const newPrice = basePrice * currentQty;
              if (priceElement.innerHTML.includes("span")) {
-                 const spanText = priceElement.querySelector('span').outerHTML;
-                 priceElement.innerHTML = `₹${newPrice} ${spanText}`;
+                  const spanText = priceElement.querySelector('span').outerHTML;
+                  priceElement.innerHTML = `₹${newPrice} ${spanText}`;
             } else {
-                priceElement.innerText = `₹${newPrice}`;
+                 priceElement.innerText = `₹${newPrice}`;
             }
         }
 
         function addToCart(itemName, itemPrice, itemId) {
             const existingItemIndex = cart.findIndex(item => item.name === itemName);
             
-            // Only add the item to the cart if it doesn't already exist.
             if (existingItemIndex === -1) { 
                 const qty = items[itemId].qty;
                 cart.push({ id: itemId, name: itemName, price: itemPrice, qty: qty });
             }
-            // If the item is already in the cart, clicking "Add to Cart" again will now simply open the cart
-            // without changing the quantity. Quantity adjustments must be made from within the cart.
 
             updateCartDisplay();
             toggleCart();
@@ -389,36 +386,48 @@
                 document.getElementById('sun-icon').classList.add('hidden');
             }
             
+            // --- Logic for Closed Store ---
+            const isStoreClosed = true; // Set to true to disable the store
+
+            if (isStoreClosed) {
+                // Show the closed modal (it's visible by default in the HTML now)
+                
+                // Disable all action buttons
+                const actionButtons = document.querySelectorAll(
+                    'button[onclick*="buyNow"],' +
+                    'button[onclick*="addToCart"],' +
+                    'button[onclick*="changeQuantity"]'
+                );
+                actionButtons.forEach(button => {
+                    button.disabled = true;
+                    button.classList.add('opacity-50', 'cursor-not-allowed');
+                    button.classList.remove('hover:from-blue-600', 'hover:to-purple-700', 'hover:bg-red-600', 'hover:bg-green-600', 'hover:bg-gray-600');
+                });
+
+                // Disable cart toggle functionality
+                const cartToggle = document.querySelector('.cart-toggle-icon');
+                if (cartToggle) {
+                    cartToggle.onclick = null; // Remove the onclick event
+                    cartToggle.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            }
+            
             toggleQRDisplay();
         });
     </script>
 </head>
 <body id="mainBody" class="bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100">
-    <div id="announcementModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 dark:bg-opacity-70">
-        <div class="bg-yellow-100 border-2 border-yellow-300 rounded-lg shadow-lg p-6 w-96 relative animate-blink dark:bg-yellow-900 dark:border-yellow-700">
-            <button onclick="closeAnnouncement()" class="absolute top-2 right-2 text-yellow-800 hover:text-yellow-900 dark:text-yellow-200 dark:hover:text-yellow-100">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-            <h2 class="text-lg font-bold text-yellow-900 mb-2 dark:text-yellow-100">⚡ Announcement</h2>
-            <p class="text-yellow-800 font-medium dark:text-yellow-200 mb-2">
-                Our operating hours are:
-                <br>
-                <b>Every Night:</b> 12:00 AM to 02:15 AM
-                <br>
-                <b>Weekends:</b> 10:00 AM - 02:00 AM (next day)
-            </p>
-            <p class="text-yellow-800 font-medium dark:text-yellow-200">
-                We are working on payment gateways so for now please use <b>Cash on Delivery</b>.
+    
+    <!-- Closed for Business Modal -->
+    <div id="closedModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center max-w-md w-full transform transition-all duration-300 scale-100">
+            <h2 class="text-4xl mb-4">🍫😴</h2>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-3">SnackStation's on a Cheat Day!</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-6">
+                Even snacks need a break from being irresistible. We’ll be back tomorrow, hungrier than ever! 🚀
             </p>
         </div>
     </div>
-    <script>
-        function closeAnnouncement() {
-            document.getElementById('announcementModal').style.display = 'none';
-        }
-    </script>
 
     <header class="gradient-header text-white p-4 shadow-lg sticky top-0 z-30">
         <div class="container mx-auto flex justify-between items-center">
@@ -439,7 +448,7 @@
                         <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 20a8 8 0 110-16 8 8 0 010 16zM12 5a1 1 0 00-1 1v2a1 1 0 002 0V6a1 1 0 00-1-1zM19 12a1 1 0 00-1-1h-2a1 1 0 000 2h2a1 1 0 001-1zM5 12a1 1 0 00-1-1H2a1 1 0 000 2h2a1 1 0 001-1zM12 19a1 1 0 00-1 1v2a1 1 0 002 0v-2a1 1 0 00-1-1zM16.24 7.76a1 1 0 00.71-.29l1.41-1.41a1 1 0 00-1.41-1.41l-1.41 1.41a1 1 0 00.29.71zM7.76 16.24a1 1 0 00.71.29l1.41 1.41a1 1 0 00-1.41 1.41l-1.41-1.41a1 1 0 00-.29-.71zM18.36 18.36a1 1 0 00-.71.29l-1.41 1.41a1 1 0 101.41 1.41l1.41-1.41a1 1 0 00-.29-.71zM5.64 5.64a1 1 0 00-.71-.29l-1.41-1.41a1 1 0 10-1.41 1.41l1.41 1.41a1 1 0 00.71-.29z"></path>
                     </svg>
                 </button>
-                <div class="relative cursor-pointer text-white" onclick="toggleCart()">
+                <div class="relative cursor-pointer text-white cart-toggle-icon" onclick="toggleCart()">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
                     </svg>
@@ -965,5 +974,3 @@
     </footer>
 </body>
 </html>
-
-
