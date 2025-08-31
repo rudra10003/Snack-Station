@@ -99,7 +99,7 @@
             'maggi': { name: 'Slurpy Maggi Fix', price: 15, qty: 2, stock: 'high' },
             'lays': { name: 'Lays Crunch Pop', price: 35, qty: 1, stock: 'low' },
             'takatak': { name: 'TakaTak Zing Shot', price: 35, qty: 1, stock: 'medium' },
-            'oreo': { name: 'Oreo Choco Bites', price: 20, qty: 1, stock: 'high' },
+            'bounce': { name: 'Bounce Choco Bites', price: 20, qty: 1, stock: 'high' },
             'duo1': { name: 'Masala Madness', price: 45, qty: 1, stock: 'high' },
             'duo2': { name: 'Crunch Noodle Punch', price: 45, qty: 1, stock: 'high' },
             'duo3': { name: 'Tangy Crunch Blast', price: 60, qty: 1, stock: 'high' },
@@ -155,10 +155,10 @@
 
             const newPrice = basePrice * currentQty;
              if (priceElement.innerHTML.includes("span")) {
-                  const spanText = priceElement.querySelector('span').outerHTML;
-                  priceElement.innerHTML = `₹${newPrice} ${spanText}`;
+                 const spanText = priceElement.querySelector('span').outerHTML;
+                 priceElement.innerHTML = `₹${newPrice} ${spanText}`;
             } else {
-                 priceElement.innerText = `₹${newPrice}`;
+                priceElement.innerText = `₹${newPrice}`;
             }
         }
 
@@ -387,11 +387,12 @@
             }
             
             // --- Logic for Closed Store ---
-            const isStoreClosed = true; // Set to true to disable the store
+            const isStoreClosed = false; // Set to true to disable the store
 
             if (isStoreClosed) {
-                // Show the closed modal (it's visible by default in the HTML now)
-                
+                // Show the closed modal
+                document.getElementById('closedModal').classList.remove('hidden');
+
                 // Disable all action buttons
                 const actionButtons = document.querySelectorAll(
                     'button[onclick*="buyNow"],' +
@@ -410,6 +411,8 @@
                     cartToggle.onclick = null; // Remove the onclick event
                     cartToggle.classList.add('opacity-50', 'cursor-not-allowed');
                 }
+            } else {
+                 document.getElementById('closedModal').classList.add('hidden');
             }
             
             toggleQRDisplay();
@@ -419,7 +422,7 @@
 <body id="mainBody" class="bg-gradient-to-br from-light-orange via-light-pink to-light-purple min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100">
     
     <!-- Closed for Business Modal -->
-    <div id="closedModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+    <div id="closedModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 hidden">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center max-w-md w-full transform transition-all duration-300 scale-100">
             <h2 class="text-4xl mb-4">🍫😴</h2>
             <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-3">SnackStation's on a Cheat Day!</h3>
@@ -536,19 +539,19 @@
                         </button>
                     </div>
                 </div>
-                <!-- Oreo Choco Bites -->
+                <!-- Bounce Choco Bites -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🍪</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Oreo Choco Bites</h3>
-                    <p id="oreo-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹20</p>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Bounce Choco Bites</h3>
+                    <p id="bounce-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹20</p>
                     <div class="flex items-center justify-center mb-4">
-                        <button onclick="changeQuantity('oreo', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="oreo-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
-                        <button onclick="changeQuantity('oreo', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                        <button onclick="changeQuantity('bounce', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="bounce-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
+                        <button onclick="changeQuantity('bounce', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="buyNow('Oreo Choco Bites', 20, 'oreo')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('Oreo Choco Bites', 20, 'oreo')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('Bounce Choco Bites', 20, 'bounce')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Bounce Choco Bites', 20, 'bounce')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
@@ -575,7 +578,8 @@
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🌶️</span>
                     </div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Masala Madness</h3>
+                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Masala Madness</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + TakaTak)</p>
                     <p id="duo1-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo1', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
@@ -604,7 +608,8 @@
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🥔</span>
                     </div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Crunch Noodle Punch</h3>
+                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Crunch Noodle Punch</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + Lays)</p>
                     <p id="duo2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo2', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
@@ -621,7 +626,8 @@
                 <!-- Tangy Crunch Blast -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🌶️ + 🥔</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Tangy Crunch Blast</h3>
+                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Tangy Crunch Blast</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(TakaTak + Lays)</p>
                     <p id="duo3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹60 <span class="text-sm text-green-500">(Save 10 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
@@ -650,7 +656,8 @@
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🍪</span>
                     </div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Sweet ’n’ Spicy Fix</h3>
+                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Sweet ’n’ Spicy Fix</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + Bounce)</p>
                     <p id="duo4-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹30 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo4', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
@@ -667,7 +674,8 @@
                 <!-- Choco Zing Duo -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🌶️ + 🍪</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Choco Zing Duo</h3>
+                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Choco Zing Duo</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(TakaTak + Bounce)</p>
                     <p id="duo5-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹50 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo5', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
@@ -684,7 +692,8 @@
                 <!-- Choco Crunch Treat -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🥔 + 🍪</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Choco Crunch Treat</h3>
+                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Choco Crunch Treat</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Bounce + Lays)</p>
                     <p id="duo6-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹55</p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo6', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
@@ -722,7 +731,8 @@
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🥔</span>
                     </div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">The Beast Box</h3>
+                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">The Beast Box</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + TakaTak + Lays)</p>
                     <p id="trio1-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹75 <span class="text-sm text-green-500">(Save 10 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('trio1', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
@@ -753,7 +763,8 @@
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🍪</span>
                     </div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Sweet Heat Box</h3>
+                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Sweet Heat Box</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + TakaTak + Bounce)</p>
                     <p id="trio2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹70</p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('trio2', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
@@ -770,7 +781,8 @@
                 <!-- Crunch Blast Box -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🥔+🌶️+🍪</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Crunch Blast Box</h3>
+                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Crunch Blast Box</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Lays + TakaTak + Bounce)</p>
                     <p id="trio3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹85 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('trio3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
@@ -809,7 +821,8 @@
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🍪</span>
                     </div>
-                    <h3 class="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-white">SnackStation Supreme 👑</h3>
+                    <h3 class="text-2xl font-bold text-center text-gray-800 dark:text-white">SnackStation Supreme 👑</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + Lays + TakaTak + Bounce)</p>
                     <p id="ultimate-price" class="text-3xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹99 <span class="text-sm text-green-500">(Save 6 rs)</span></p>
                     <div class="flex items-center justify-center mb-6">
                         <button onclick="changeQuantity('ultimate', -1)" class="bg-red-500 text-white w-10 h-10 rounded-full hover:bg-red-600 transition-colors text-lg">-</button>
@@ -974,3 +987,4 @@
     </footer>
 </body>
 </html>
+
