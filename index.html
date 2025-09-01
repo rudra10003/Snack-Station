@@ -96,20 +96,20 @@
     <script>
         // Data structure to hold the state of the app
         const items = {
-            'maggi': { name: 'Slurpy Maggi Fix', price: 15, qty: 2, stock: 'out' },
-            'lays': { name: 'Lays Crunch Pop', price: 35, qty: 1, stock: 'out' },
-            'takatak': { name: 'TakaTak Zing Shot', price: 35, qty: 1, stock: 'out' },
-            'bounce': { name: 'Bounce Choco Bites', price: 20, qty: 1, stock: 'out' },
-            'duo1': { name: 'Masala Madness', price: 45, qty: 1, stock: 'out' },
-            'duo2': { name: 'Crunch Noodle Punch', price: 45, qty: 1, stock: 'out' },
-            'duo3': { name: 'Tangy Crunch Blast', price: 60, qty: 1, stock: 'out' },
-            'duo4': { name: 'Sweet ’n’ Spicy Fix', price: 30, qty: 1, stock: 'out' },
-            'duo5': { name: 'Choco Zing Duo', price: 50, qty: 1, stock: 'out' },
-            'duo6': { name: 'Choco Crunch Treat', price: 55, qty: 1, stock: 'out' },
-            'trio1': { name: 'The Beast Box', price: 75, qty: 1, stock: 'out' },
-            'trio2': { name: 'Sweet Heat Box', price: 70, qty: 1, stock: 'out' },
-            'trio3': { name: 'Crunch Blast Box', price: 85, qty: 1, stock: 'out' },
-            'ultimate': { name: 'SnackStation Supreme 👑', price: 99, qty: 1, stock: 'out' },
+            'maggi': { name: 'Slurpy Maggi Fix', price: 15, qty: 2, stock: 'high' },
+            'lays': { name: 'Lays Crunch Pop', price: 35, qty: 1, stock: 'low' },
+            'takatak': { name: 'TakaTak Zing Shot', price: 35, qty: 1, stock: 'medium' },
+            'bounce': { name: 'Bounce Choco Bites', price: 20, qty: 1, stock: 'high' },
+            'duo1': { name: 'Masala Madness', price: 45, qty: 1, stock: 'high' },
+            'duo2': { name: 'Crunch Noodle Punch', price: 45, qty: 1, stock: 'high' },
+            'duo3': { name: 'Tangy Crunch Blast', price: 60, qty: 1, stock: 'high' },
+            'duo4': { name: 'Sweet ’n’ Spicy Fix', price: 30, qty: 1, stock: 'high' },
+            'duo5': { name: 'Choco Zing Duo', price: 50, qty: 1, stock: 'high' },
+            'duo6': { name: 'Choco Crunch Treat', price: 55, qty: 1, stock: 'high' },
+            'trio1': { name: 'The Beast Box', price: 75, qty: 1, stock: 'high' },
+            'trio2': { name: 'Sweet Heat Box', price: 70, qty: 1, stock: 'high' },
+            'trio3': { name: 'Crunch Blast Box', price: 85, qty: 1, stock: 'high' },
+            'ultimate': { name: 'SnackStation Supreme 👑', price: 99, qty: 1, stock: 'high' },
         };
         let cart = [];
 
@@ -414,40 +414,6 @@
             } else {
                  document.getElementById('closedModal').classList.add('hidden');
             }
-
-            // --- Logic for Out of Stock items ---
-            for (const itemId in items) {
-                if (items[itemId].stock === 'out') {
-                    const itemCard = document.getElementById(`${itemId}-card`);
-                    if (itemCard) {
-                        const buyNowBtn = itemCard.querySelector('button[onclick*="buyNow"]');
-                        const addToCartBtn = itemCard.querySelector('button[onclick*="addToCart"]');
-                        const priceElement = document.getElementById(`${itemId}-price`);
-                        const quantityControls = itemCard.querySelector('.quantity-controls');
-
-                        if (buyNowBtn) {
-                            buyNowBtn.disabled = true;
-                            buyNowBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                            buyNowBtn.innerText = "Out of Stock";
-                            buyNowBtn.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'hover:from-blue-600', 'hover:to-purple-700');
-                            buyNowBtn.classList.add('bg-gray-400');
-                        }
-
-                        if (addToCartBtn) {
-                            addToCartBtn.disabled = true;
-                            addToCartBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                        }
-                        
-                        if (priceElement) {
-                            priceElement.innerHTML = '<span class="text-red-500 text-xl font-bold">Out of Stock</span>';
-                        }
-                        
-                        if (quantityControls) {
-                           quantityControls.classList.add('hidden');
-                        }
-                    }
-                }
-            }
             
             toggleQRDisplay();
         });
@@ -513,7 +479,7 @@
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">🔹 Singles 🔹</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Slurpy Maggi Fix -->
-                <div id="maggi-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="h-20 flex items-center justify-center mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-20 h-20">
                             <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"></rect>
@@ -527,7 +493,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Slurpy Maggi Fix</h3>
                     <p id="maggi-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹30</p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('maggi', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="maggi-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">2</span>
                         <button onclick="changeQuantity('maggi', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -540,11 +506,11 @@
                     </div>
                 </div>
                 <!-- Lays Crunch Pop -->
-                <div id="lays-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🥔</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Lays Crunch Pop</h3>
                     <p id="lays-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹35</p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('lays', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="lays-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('lays', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -557,11 +523,11 @@
                     </div>
                 </div>
                 <!-- TakaTak Zing Shot -->
-                <div id="takatak-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🌶️</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">TakaTak Zing Shot</h3>
                     <p id="takatak-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹35</p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('takatak', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="takatak-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('takatak', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -574,11 +540,11 @@
                     </div>
                 </div>
                 <!-- Bounce Choco Bites -->
-                <div id="bounce-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🍪</div>
                     <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Bounce Choco Bites</h3>
                     <p id="bounce-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹20</p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('bounce', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="bounce-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('bounce', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -598,7 +564,7 @@
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">🔹 Duos 🔹</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                  <!-- Masala Madness -->
-                <div id="duo1-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
                             <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"></rect>
@@ -615,7 +581,7 @@
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Masala Madness</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + TakaTak)</p>
                     <p id="duo1-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo1', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo1-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('duo1', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -628,7 +594,7 @@
                     </div>
                 </div>
                 <!-- Crunch Noodle Punch -->
-                <div id="duo2-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
                             <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"></rect>
@@ -645,7 +611,7 @@
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Crunch Noodle Punch</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + Lays)</p>
                     <p id="duo2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo2', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo2-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('duo2', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -658,12 +624,12 @@
                     </div>
                 </div>
                 <!-- Tangy Crunch Blast -->
-                <div id="duo3-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🌶️ + 🥔</div>
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Tangy Crunch Blast</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(TakaTak + Lays)</p>
                     <p id="duo3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹60 <span class="text-sm text-green-500">(Save 10 rs)</span></p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo3-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('duo3', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -676,7 +642,7 @@
                     </div>
                 </div>
                 <!-- Sweet ’n’ Spicy Fix -->
-                <div id="duo4-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                      <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
                             <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"></rect>
@@ -693,7 +659,7 @@
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Sweet ’n’ Spicy Fix</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + Bounce)</p>
                     <p id="duo4-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹30 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo4', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo4-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('duo4', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -706,12 +672,12 @@
                     </div>
                 </div>
                 <!-- Choco Zing Duo -->
-                <div id="duo5-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🌶️ + 🍪</div>
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Choco Zing Duo</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(TakaTak + Bounce)</p>
                     <p id="duo5-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹50 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo5', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo5-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('duo5', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -724,12 +690,12 @@
                     </div>
                 </div>
                 <!-- Choco Crunch Treat -->
-                <div id="duo6-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🥔 + 🍪</div>
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Choco Crunch Treat</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Bounce + Lays)</p>
                     <p id="duo6-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹55</p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo6', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo6-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('duo6', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -749,7 +715,7 @@
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">🔹 Trios 🔹</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- The Beast Box -->
-                <div id="trio1-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                      <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
                             <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"></rect>
@@ -768,7 +734,7 @@
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">The Beast Box</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + TakaTak + Lays)</p>
                     <p id="trio1-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹75 <span class="text-sm text-green-500">(Save 10 rs)</span></p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('trio1', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="trio1-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('trio1', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -781,7 +747,7 @@
                     </div>
                 </div>
                 <!-- Sweet Heat Box -->
-                <div id="trio2-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
                             <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"></rect>
@@ -800,7 +766,7 @@
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Sweet Heat Box</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + TakaTak + Bounce)</p>
                     <p id="trio2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹70</p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('trio2', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="trio2-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('trio2', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -813,12 +779,12 @@
                     </div>
                 </div>
                 <!-- Crunch Blast Box -->
-                <div id="trio3-card" class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                     <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🥔+🌶️+🍪</div>
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Crunch Blast Box</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Lays + TakaTak + Bounce)</p>
                     <p id="trio3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹85 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
-                    <div class="flex items-center justify-center mb-4 quantity-controls">
+                    <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('trio3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="trio3-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('trio3', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
@@ -837,7 +803,7 @@
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">🔹 The Ultimate Box 🔹</h2>
             <div class="flex justify-center">
-                <div id="ultimate-card" class="item-card rounded-xl p-8 shadow-lg max-w-md w-full bg-white dark:bg-gray-800">
+                <div class="item-card rounded-xl p-8 shadow-lg max-w-md w-full bg-white dark:bg-gray-800">
                     <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
                             <rect x="10" y="10" width="80" height="80" rx="10" fill="#ffde00"></rect>
@@ -858,7 +824,7 @@
                     <h3 class="text-2xl font-bold text-center text-gray-800 dark:text-white">SnackStation Supreme 👑</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + Lays + TakaTak + Bounce)</p>
                     <p id="ultimate-price" class="text-3xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹99 <span class="text-sm text-green-500">(Save 6 rs)</span></p>
-                    <div class="flex items-center justify-center mb-6 quantity-controls">
+                    <div class="flex items-center justify-center mb-6">
                         <button onclick="changeQuantity('ultimate', -1)" class="bg-red-500 text-white w-10 h-10 rounded-full hover:bg-red-600 transition-colors text-lg">-</button>
                         <span id="ultimate-qty" class="mx-6 text-xl font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('ultimate', 1)" class="bg-green-500 text-white w-10 h-10 rounded-full hover:bg-green-600 transition-colors text-lg">+</button>
@@ -1021,4 +987,3 @@
     </footer>
 </body>
 </html>
-
