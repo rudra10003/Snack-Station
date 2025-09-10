@@ -99,17 +99,17 @@
             'maggi': { name: 'Slurpy Maggi Fix', price: 15, qty: 2, stock: 'high' },
             'lays': { name: 'Lays Crunch Pop', price: 35, qty: 1, stock: 'low' },
             'takatak': { name: 'TakaTak Zing Shot', price: 35, qty: 1, stock: 'medium' },
-            'jimjam': { name: 'Jimjam Joy Slices', price: 15, qty: 2, stock: 'high' },
-            'duo1': { name: 'Masala Madness', price: 45, qty: 1, stock: 'high' },
-            'duo2': { name: 'Crunch Noodle Punch', price: 45, qty: 1, stock: 'high' },
-            'duo3': { name: 'Tangy Crunch Blast', price: 60, qty: 1, stock: 'high' },
-            'duo4': { name: 'Sweet ’n’ Spicy Fix', price: 30, qty: 1, stock: 'high' },
-            'duo5': { name: 'Choco Zing Duo', price: 50, qty: 1, stock: 'high' },
-            'duo6': { name: 'Choco Crunch Treat', price: 45, qty: 1, stock: 'high' },
-            'trio1': { name: 'The Beast Box', price: 75, qty: 1, stock: 'high' },
-            'trio2': { name: 'Sweet Heat Box', price: 60, qty: 1, stock: 'high' },
-            'trio3': { name: 'Crunch Blast Box', price: 85, qty: 1, stock: 'high' },
-            'ultimate': { name: 'SnackStation Supreme 👑', price: 95, qty: 1, stock: 'high' },
+            'cake': { name: 'Britannia Cake (Choco)', price: 40, qty: 1, stock: 'high' },
+            'duo1': { name: 'Masala Madness', price: 45, qty: 1, stock: 'high' }, // Maggi + TakaTak
+            'duo2': { name: 'Crunch Noodle Punch', price: 45, qty: 1, stock: 'high' }, // Maggi + Lays
+            'duo3': { name: 'Tangy Crunch Blast', price: 60, qty: 1, stock: 'high' }, // TakaTak + Lays
+            'duo4': { name: 'Slurp \'n\' Sweet', price: 55, qty: 1, stock: 'high' }, // Maggi + Cake
+            'duo5': { name: 'Choco Zing Duo', price: 70, qty: 1, stock: 'high' }, // TakaTak + Cake
+            'duo6': { name: 'Choco Crunch Treat', price: 70, qty: 1, stock: 'high' }, // Lays + Cake
+            'trio1': { name: 'The Beast Box', price: 75, qty: 1, stock: 'high' }, // Maggi + TakaTak + Lays
+            'trio2': { name: 'Sweet Heat Box', price: 85, qty: 1, stock: 'high' }, // Maggi + TakaTak + Cake
+            'trio3': { name: 'Crunch Blast Box', price: 105, qty: 1, stock: 'high' }, // Lays + TakaTak + Cake
+            'ultimate': { name: 'SnackStation Supreme 👑', price: 115, qty: 1, stock: 'high' }, // All four
         };
         let cart = [];
 
@@ -120,7 +120,7 @@
             if (!qtyElement || !priceElement) return;
 
             const basePrice = items[itemId].price;
-            const defaultQty = (itemId === 'maggi' || itemId === 'jimjam') ? 2 : 1;
+            const defaultQty = (itemId === 'maggi') ? 2 : 1;
 
             items[itemId].qty = defaultQty;
             qtyElement.innerText = defaultQty;
@@ -145,7 +145,7 @@
             let currentQty = parseInt(qtyElement.innerText);
             currentQty += change;
 
-            const minQty = (itemId === 'maggi' || itemId === 'jimjam') ? 2 : 1;
+            const minQty = (itemId === 'maggi') ? 2 : 1;
             if (currentQty < minQty) {
                 currentQty = minQty;
             }
@@ -473,6 +473,19 @@
         </div>
     </div>
 
+    <!-- Special Note Section -->
+    <div class="container mx-auto px-6 pt-6">
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg shadow-md dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-600">
+            <div class="flex items-center">
+                <div class="py-1"><svg class="fill-current h-6 w-6 text-yellow-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-1-11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1zm1-4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg></div>
+                <div>
+                    <p class="font-bold">Vending Machine Drinks Available!</p>
+                    <p class="text-sm">Want a drink? We can grab one for you from the vending machine for a +₹5 delivery fee. <br class="hidden sm:inline">(A snack purchase is required)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main class="container mx-auto p-6">
         <!-- Singles Section -->
         <section class="mb-12">
@@ -539,19 +552,19 @@
                         </button>
                     </div>
                 </div>
-                <!-- Jimjam Joy Slices -->
+                <!-- Britannia Cake (Choco) -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
-                    <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🍪</div>
-                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Jimjam Joy Slices</h3>
-                    <p id="jimjam-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹30</p>
+                    <div class="text-6xl text-center mb-4 h-20 flex items-center justify-center">🍰</div>
+                    <h3 class="text-xl font-bold text-center mb-2 text-gray-800 dark:text-white">Britannia Cake (Choco)</h3>
+                    <p id="cake-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹40</p>
                     <div class="flex items-center justify-center mb-4">
-                        <button onclick="changeQuantity('jimjam', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
-                        <span id="jimjam-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">2</span>
-                        <button onclick="changeQuantity('jimjam', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
+                        <button onclick="changeQuantity('cake', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
+                        <span id="cake-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
+                        <button onclick="changeQuantity('cake', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="buyNow('Jimjam Joy Slices', 15, 'jimjam')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('Jimjam Joy Slices', 15, 'jimjam')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('Britannia Cake (Choco)', 40, 'cake')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Britannia Cake (Choco)', 40, 'cake')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
@@ -641,7 +654,7 @@
                         </button>
                     </div>
                 </div>
-                <!-- Sweet ’n’ Spicy Fix -->
+                <!-- Slurp 'n' Sweet -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
                      <div class="h-16 flex items-center justify-center space-x-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-12 h-12">
@@ -654,55 +667,55 @@
                             <path d="M42 68 C 47 64, 52 70, 57 66 S 67 64, 62 71" stroke="#f3a32c" stroke-width="3" fill="none" stroke-linecap="round"></path>
                         </svg>
                         <span class="text-4xl">+</span>
-                        <span class="text-4xl">🍪</span>
+                        <span class="text-4xl">🍰</span>
                     </div>
-                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Sweet ’n’ Spicy Fix</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + Jimjam)</p>
-                    <p id="duo4-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹30</p>
+                    <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Slurp 'n' Sweet</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + Cake)</p>
+                    <p id="duo4-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹55</p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo4', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo4-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('duo4', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                      <div class="flex space-x-2">
-                        <button onclick="buyNow('Sweet ’n’ Spicy Fix', 30, 'duo4')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('Sweet ’n’ Spicy Fix', 30, 'duo4')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('Slurp \'n\' Sweet', 55, 'duo4')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Slurp \'n\' Sweet', 55, 'duo4')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
                 </div>
                 <!-- Choco Zing Duo -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
-                    <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🌶️ + 🍪</div>
+                    <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🌶️ + 🍰</div>
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Choco Zing Duo</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(TakaTak + Jimjam)</p>
-                    <p id="duo5-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹50</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(TakaTak + Cake)</p>
+                    <p id="duo5-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹70 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo5', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo5-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('duo5', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                      <div class="flex space-x-2">
-                        <button onclick="buyNow('Choco Zing Duo', 50, 'duo5')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('Choco Zing Duo', 50, 'duo5')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('Choco Zing Duo', 70, 'duo5')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Choco Zing Duo', 70, 'duo5')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
                 </div>
                 <!-- Choco Crunch Treat -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
-                    <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🥔 + 🍪</div>
+                    <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🥔 + 🍰</div>
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Choco Crunch Treat</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Jimjam + Lays)</p>
-                    <p id="duo6-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹45 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Lays + Cake)</p>
+                    <p id="duo6-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹70 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('duo6', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="duo6-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('duo6', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                      <div class="flex space-x-2">
-                        <button onclick="buyNow('Choco Crunch Treat', 45, 'duo6')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('Choco Crunch Treat', 45, 'duo6')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('Choco Crunch Treat', 70, 'duo6')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Choco Crunch Treat', 70, 'duo6')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
@@ -761,37 +774,37 @@
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🌶️</span>
                         <span class="text-4xl">+</span>
-                        <span class="text-4xl">🍪</span>
+                        <span class="text-4xl">🍰</span>
                     </div>
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Sweet Heat Box</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + TakaTak + Jimjam)</p>
-                    <p id="trio2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹60 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + TakaTak + Cake)</p>
+                    <p id="trio2-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹85 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('trio2', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="trio2-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('trio2', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                      <div class="flex space-x-2">
-                        <button onclick="buyNow('Sweet Heat Box', 60, 'trio2')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('Sweet Heat Box', 60, 'trio2')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('Sweet Heat Box', 85, 'trio2')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Sweet Heat Box', 85, 'trio2')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
                 </div>
                 <!-- Crunch Blast Box -->
                 <div class="item-card rounded-xl p-6 shadow-lg bg-white dark:bg-gray-800">
-                    <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🥔+🌶️+🍪</div>
+                    <div class="text-4xl text-center mb-4 h-16 flex items-center justify-center">🥔+🌶️+🍰</div>
                     <h3 class="text-xl font-bold text-center text-gray-800 dark:text-white">Crunch Blast Box</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Lays + TakaTak + Jimjam)</p>
-                    <p id="trio3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹85</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Lays + TakaTak + Cake)</p>
+                    <p id="trio3-price" class="text-2xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹105 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
                     <div class="flex items-center justify-center mb-4">
                         <button onclick="changeQuantity('trio3', -1)" class="bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition-colors">-</button>
                         <span id="trio3-qty" class="mx-4 text-lg font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('trio3', 1)" class="bg-green-500 text-white w-8 h-8 rounded-full hover:bg-green-600 transition-colors">+</button>
                     </div>
                      <div class="flex space-x-2">
-                        <button onclick="buyNow('Crunch Blast Box', 85, 'trio3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('Crunch Blast Box', 85, 'trio3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('Crunch Blast Box', 105, 'trio3')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('Crunch Blast Box', 105, 'trio3')" class="bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
@@ -819,19 +832,19 @@
                         <span class="text-4xl">+</span>
                         <span class="text-4xl">🌶️</span>
                         <span class="text-4xl">+</span>
-                        <span class="text-4xl">🍪</span>
+                        <span class="text-4xl">🍰</span>
                     </div>
                     <h3 class="text-2xl font-bold text-center text-gray-800 dark:text-white">SnackStation Supreme 👑</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + Lays + TakaTak + Jimjam)</p>
-                    <p id="ultimate-price" class="text-3xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹95 <span class="text-sm text-green-500">(Save 5 rs)</span></p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-2">(Maggi + Lays + TakaTak + Cake)</p>
+                    <p id="ultimate-price" class="text-3xl font-bold text-center text-blue-600 mb-4 dark:text-blue-400">₹115 <span class="text-sm text-green-500">(Save 10 rs)</span></p>
                     <div class="flex items-center justify-center mb-6">
                         <button onclick="changeQuantity('ultimate', -1)" class="bg-red-500 text-white w-10 h-10 rounded-full hover:bg-red-600 transition-colors text-lg">-</button>
                         <span id="ultimate-qty" class="mx-6 text-xl font-semibold text-gray-800 dark:text-gray-200">1</span>
                         <button onclick="changeQuantity('ultimate', 1)" class="bg-green-500 text-white w-10 h-10 rounded-full hover:bg-green-600 transition-colors text-lg">+</button>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="buyNow('SnackStation Supreme 👑', 95, 'ultimate')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold text-lg flex items-center justify-center">Buy Now</button>
-                        <button onclick="addToCart('SnackStation Supreme 👑', 95, 'ultimate')" class="bg-gray-500 text-white py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                        <button onclick="buyNow('SnackStation Supreme 👑', 115, 'ultimate')" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold text-lg flex items-center justify-center">Buy Now</button>
+                        <button onclick="addToCart('SnackStation Supreme 👑', 115, 'ultimate')" class="bg-gray-500 text-white py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"></path></svg>
                         </button>
                     </div>
@@ -987,4 +1000,3 @@
     </footer>
 </body>
 </html>
-
